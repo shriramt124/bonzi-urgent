@@ -9,16 +9,11 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
     <header className={`fixed top-0 w-full z-50 bg-white transition-all duration-300 ${
       scrolled ? 'shadow-md' : 'shadow-sm'
     }`}>
-      {/* Top Header */}
-      <div className="bg-gray-100 py-1 px-4 text-sm text-gray-600 text-right">
-        Select Language
-      </div>
-      
       {/* Main Header */}
       <div className="px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
+        <div className="flex items-center">
+          {/* Logo - Centered */}
+          <div className="flex-1 flex justify-center">
             <Link href="/" className="flex items-center">
               <div className="bg-orange-500 text-white px-3 py-2 rounded-md font-bold text-lg">
                 BonziCart
@@ -49,8 +44,12 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
             </div>
           </div>
           
-          {/* Right Icons */}
-          <div className="flex items-center space-x-4">
+          {/* Right Icons and Language */}
+          <div className="flex-1 flex items-center justify-end space-x-4">
+            <div className="text-sm text-gray-600">
+              Select Language
+            </div>
+            
             <div className="relative">
               <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
