@@ -189,21 +189,15 @@ export default function Home() {
           <div className="flex-1">
             <HeroBanner />
             
-            </div>
-        </div>
-        
-        {/* Deals & Special Offers Section - Full width */}
-        <div className="bg-white rounded-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
-            <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
-              View All Deals →
-            </a>
-          </div>
-          
-          <div className="flex gap-6">
-            {/* Main deals grid */}
-            <div className="flex-1">
+            {/* Deals & Special Offers Section - Right below banner */}
+            <div className="bg-white rounded-lg p-6 mt-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
+                <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
+                  View All Deals →
+                </a>
+              </div>
+              
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {mockProducts.slice(0, 5).map((product) => (
                   <div key={product.id} className="relative">
@@ -217,40 +211,42 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            
-            {/* Right Exclusive Sales Section - Reduced height */}
-            <div className="w-56 flex-shrink-0">
-              <div className="bg-white rounded-lg shadow-sm p-3">
-                <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
-                
-                <div className="h-72 overflow-hidden relative">
-                  <div className="animate-scroll-vertical space-y-3">
-                    {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
-                      <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
-                        <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
-                          <span className="text-xs text-gray-400">Product Image</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
-                        <div className="flex items-center space-x-2">
-                          <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
-                          <span className="text-sm font-bold text-red-500">₹{product.price}</span>
-                        </div>
-                        <div className="flex items-center mt-1">
-                          <div className="flex text-yellow-400 text-xs">
-                            {[...Array(5)].map((_, i) => (
-                              <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
-                            ))}
-                          </div>
-                          <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
-                        </div>
+          </div>
+
+          {/* Right Exclusive Sales Section */}
+          <div className="w-56 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm p-3">
+              <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
+              
+              <div className="h-96 overflow-hidden relative">
+                <div className="animate-scroll-vertical space-y-3">
+                  {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
+                    <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
+                      <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                        <span className="text-xs text-gray-400">Product Image</span>
                       </div>
-                    ))}
-                  </div>
+                      <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
+                        <span className="text-sm font-bold text-red-500">₹{product.price}</span>
+                      </div>
+                      <div className="flex items-center mt-1">
+                        <div className="flex text-yellow-400 text-xs">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
+        
         
         <ProductCarousel 
           title="Fall in Love With Collections"
