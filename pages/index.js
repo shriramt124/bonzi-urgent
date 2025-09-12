@@ -214,12 +214,12 @@ export default function Home() {
 
           {/* Right Exclusive Sales Section */}
           <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-3">
+            <div className="bg-white rounded-lg shadow-sm p-3 h-full">
               <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
 
-              <div className="h-64 overflow-hidden relative">
+              <div className="h-96 overflow-hidden relative">
                 <div className="animate-scroll-vertical space-y-3">
-                  {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
+                  {[...exclusiveProducts, ...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
                     <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
                       <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
                         <span className="text-xs text-gray-400">Product Image</span>
@@ -244,8 +244,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-
 
         <ProductCarousel 
           title="Fall in Love With Collections"
