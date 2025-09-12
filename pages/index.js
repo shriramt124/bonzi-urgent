@@ -161,24 +161,24 @@ export default function Home() {
         {/* Main three-column layout */}
         <div className="flex gap-6 mb-6">
           {/* Left Categories Section */}
-          <div className="w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-56 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm p-3">
+              <h3 className="text-base font-semibold text-gray-800 mb-3 flex items-center">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
                 </svg>
                 Categories
               </h3>
               
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {categories.map((category, index) => (
                   <a
                     key={index}
                     href="#"
-                    className="flex items-center p-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors"
+                    className="flex items-center py-2 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs"
                   >
-                    <span className="mr-3 text-lg">{category.icon}</span>
-                    <span className="text-sm">{category.name}</span>
+                    <span className="mr-2 text-sm">{category.icon}</span>
+                    <span className="text-xs">{category.name}</span>
                   </a>
                 ))}
               </div>
@@ -191,31 +191,33 @@ export default function Home() {
           </div>
 
           {/* Right Exclusive Sales Section */}
-          <div className="w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-orange-500">Exclusive Sales</h3>
+          <div className="w-56 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm p-3">
+              <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
               
-              <div className="space-y-4">
-                {exclusiveProducts.map((product) => (
-                  <div key={product.id} className="border-b pb-4 last:border-b-0">
-                    <div className="w-full h-24 bg-gray-200 rounded mb-2 flex items-center justify-center">
-                      <span className="text-xs text-gray-400">Product Image</span>
-                    </div>
-                    <h4 className="font-medium text-gray-800 text-sm mb-2 line-clamp-2">{product.title}</h4>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
-                      <span className="text-lg font-bold text-red-500">₹{product.price}</span>
-                    </div>
-                    <div className="flex items-center mt-1">
-                      <div className="flex text-yellow-400 text-xs">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
-                        ))}
+              <div className="h-96 overflow-hidden relative">
+                <div className="animate-scroll-vertical space-y-3">
+                  {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
+                    <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
+                      <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                        <span className="text-xs text-gray-400">Product Image</span>
                       </div>
-                      <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                      <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
+                        <span className="text-sm font-bold text-red-500">₹{product.price}</span>
+                      </div>
+                      <div className="flex items-center mt-1">
+                        <div className="flex text-yellow-400 text-xs">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
