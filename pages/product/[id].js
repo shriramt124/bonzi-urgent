@@ -1,30 +1,60 @@
 
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import Layout from '../../components/Layout';
 
-export default function ProductDetail() {
-  const router = useRouter();
-  const { id } = router.query;
-  const [quantity, setQuantity] = useState(1);
-
-  // Mock product data - in real app, fetch based on id
-  const product = {
-    id: id,
-    title: "HIKMICRO Lightning Digital Scope Wireless Long-Distance Thermal Imaging Camera",
+// Mock product data
+const mockProductData = {
+  1: {
+    id: 1,
+    title: "HIKMICRO Lightning Digital Scope Wireless Long-Distance Camera",
     price: 500.00,
     originalPrice: 800.00,
     rating: 4,
     reviews: 125,
-    description: "High-quality thermal imaging camera with wireless connectivity and long-distance capabilities. Perfect for professional use.",
-    specifications: [
-      "Wireless connectivity",
-      "Long-distance imaging",
-      "High resolution display",
-      "Portable design"
-    ],
+    description: "Professional digital scope with wireless connectivity and long-distance capabilities. Perfect for outdoor activities and surveillance.",
     inStock: true,
-    shippingInfo: "Free shipping on orders above ₹500"
+    features: [
+      "Wireless connectivity up to 500m range",
+      "High-definition digital zoom",
+      "Night vision capability",
+      "Waterproof design",
+      "Long battery life"
+    ]
+  },
+  2: {
+    id: 2,
+    title: "Solar Jet Toy Car Electric Scientific Experiment Kit",
+    price: 299.00,
+    originalPrice: 399.00,
+    rating: 5,
+    reviews: 89,
+    description: "Educational solar-powered toy car that demonstrates renewable energy principles. Perfect for learning and fun.",
+    inStock: true,
+    features: [
+      "Solar-powered motor",
+      "Educational assembly kit",
+      "Eco-friendly design",
+      "STEM learning tool",
+      "Ages 8+"
+    ]
+  },
+  // Add more products as needed
+};
+
+export default function ProductDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+  
+  const product = mockProductData[id] || {
+    id: id,
+    title: "Sample Product",
+    price: 299.00,
+    originalPrice: 399.00,
+    rating: 4,
+    reviews: 50,
+    description: "This is a sample product description.",
+    inStock: true,
+    features: ["Feature 1", "Feature 2", "Feature 3"]
   };
 
   return (
@@ -39,7 +69,7 @@ export default function ProductDetail() {
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {[1,2,3,4].map((i) => (
-                  <div key={i} className="w-full h-20 bg-gray-200 rounded flex items-center justify-center">
+                  <div key={i} className="w-full h-20 bg-gray-200 rounded flex items-center justify-center cursor-pointer hover:bg-gray-300">
                     <span className="text-xs text-gray-400">Thumb {i}</span>
                   </div>
                 ))}
@@ -62,14 +92,17 @@ export default function ProductDetail() {
               </div>
 
               <div className="mb-6">
-                <div className="flex items-center space-x-4 mb-2">
+                <div className="flex items-center space-x-3">
                   <span className="text-3xl font-bold text-red-500">₹{product.price}</span>
-                  <span className="text-xl text-gray-500 line-through">₹{product.originalPrice}</span>
-                  <span className="bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">
-                    {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
-                  </span>
+                  {product.originalPrice && (
+                    <span className="text-lg text-gray-500 line-through">₹{product.originalPrice}</span>
+                  )}
+                  {product.originalPrice && (
+                    <span className="bg-red-100 text-red-600 px-2 py-1 rounded text-sm">
+                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                    </span>
+                  )}
                 </div>
-                <p className="text-green-600 text-sm">{product.shippingInfo}</p>
               </div>
 
               <div className="mb-6">
@@ -78,40 +111,21 @@ export default function ProductDetail() {
               </div>
 
               <div className="mb-6">
-                <h3 className="font-semibold text-gray-800 mb-2">Specifications</h3>
-                <ul className="list-disc list-inside text-gray-600">
-                  {product.specifications.map((spec, index) => (
-                    <li key={index}>{spec}</li>
+                <h3 className="font-semibold text-gray-800 mb-2">Key Features</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">
+                  {product.features.map((feature, index) => (
+                    <li key={index}>{feature}</li>
                   ))}
                 </ul>
               </div>
 
               <div className="mb-6">
-                <div className="flex items-center space-x-4 mb-4">
-                  <label className="font-semibold text-gray-800">Quantity:</label>
-                  <div className="flex items-center border border-gray-300 rounded">
-                    <button 
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-3 py-1 hover:bg-gray-100"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 border-x">{quantity}</span>
-                    <button 
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="px-3 py-1 hover:bg-gray-100"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-
                 <div className="flex space-x-4">
-                  <button className="flex-1 bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 font-semibold">
+                  <button className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors flex-1">
                     Add to Cart
                   </button>
-                  <button className="flex-1 bg-red-500 text-white py-3 rounded-md hover:bg-red-600 font-semibold">
-                    Buy Now
+                  <button className="border border-orange-500 text-orange-500 px-6 py-3 rounded-lg hover:bg-orange-50 transition-colors">
+                    ♡ Wishlist
                   </button>
                 </div>
               </div>

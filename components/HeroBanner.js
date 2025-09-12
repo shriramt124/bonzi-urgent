@@ -1,22 +1,43 @@
 
 export default function HeroBanner() {
   return (
-    <div className="bg-gradient-to-r from-orange-100 to-orange-200 rounded-lg p-8 mb-6 relative overflow-hidden">
-      <div className="relative z-10">
+    <div className="bg-gradient-to-r from-orange-100 to-orange-300 rounded-lg overflow-hidden mb-6 relative" style={{ height: '400px' }}>
+      {/* Left Content */}
+      <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-10">
         <div className="max-w-md">
-          <p className="text-orange-600 text-sm font-medium mb-2">TRACK SMARTER, LIVE WELL</p>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">SMART RING</h1>
-          <button className="bg-white text-gray-800 px-6 py-2 rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-shadow">
-            DISCOUNT UP TO 50% OFF
+          <p className="text-orange-600 text-sm font-medium mb-2 uppercase">Chic Black Solid Tee</p>
+          <h1 className="text-5xl font-bold text-gray-800 mb-2">FASHION</h1>
+          <h2 className="text-5xl font-bold text-gray-800 mb-4">TRENDSETTER</h2>
+          <p className="text-gray-700 text-lg mb-6">
+            New arrival and best seller collection<br />
+            now available for sale.
+          </p>
+          <button className="bg-orange-500 text-white px-8 py-3 rounded-full font-medium hover:bg-orange-600 transition-colors">
+            SHOP NOW →
           </button>
-          <p className="text-gray-600 text-sm mt-2">Available Now - Grab Yours</p>
         </div>
       </div>
       
-      <div className="absolute right-8 top-1/2 transform -translate-y-1/2">
-        <div className="w-64 h-48 bg-gray-300 rounded-lg flex items-center justify-center">
-          <span className="text-gray-500">Smart Ring Image</span>
+      {/* Right Content - Model Image */}
+      <div className="absolute right-0 top-0 h-full w-1/2">
+        <div className="relative h-full">
+          {/* Circular background */}
+          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 w-80 h-80 bg-orange-200 rounded-full opacity-60"></div>
+          
+          {/* Model placeholder */}
+          <div className="absolute right-16 top-1/2 transform -translate-y-1/2 w-64 h-80 bg-gray-300 rounded-lg flex items-center justify-center">
+            <span className="text-gray-500 text-center">Fashion Model<br />Image</span>
+          </div>
         </div>
+      </div>
+      
+      {/* Navigation dots */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+        <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+        <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+        <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+        <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
       </div>
     </div>
   );

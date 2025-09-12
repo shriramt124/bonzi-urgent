@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 
 export default function ProductCard({ product, showDiscount = true }) {
@@ -12,13 +11,13 @@ export default function ProductCard({ product, showDiscount = true }) {
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <span className="text-gray-400">Product Image</span>
           </div>
-          
+
           {showDiscount && discountPercent > 0 && (
             <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
               -{discountPercent}%
             </div>
           )}
-          
+
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-50">
               <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,19 +26,19 @@ export default function ProductCard({ product, showDiscount = true }) {
             </button>
           </div>
         </div>
-        
+
         <div className="p-4">
           <h3 className="text-sm font-medium text-gray-800 mb-2 line-clamp-2">
             {product.title}
           </h3>
-          
+
           <div className="flex items-center space-x-2">
             <span className="text-lg font-bold text-red-500">₹{product.price}</span>
             {product.originalPrice && (
               <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
             )}
           </div>
-          
+
           {product.rating && (
             <div className="flex items-center mt-2">
               <div className="flex text-yellow-400 text-xs">
