@@ -138,69 +138,48 @@ const mostSearchedProducts = [
 export default function Home() {
   return (
     <Layout>
-      <div className="pt-32 flex">
-        {/* Main Content Area */}
-        <div className="flex-1 px-6">
-          <HeroBanner />
-          
-          {/* Navigation Tabs */}
-          <div className="bg-white rounded-lg mb-6">
-            <div className="flex border-b">
-              <button className="px-6 py-3 text-orange-500 border-b-2 border-orange-500 font-medium">
-                Deals & Special Offers
-              </button>
-              <button className="px-6 py-3 text-gray-600 hover:text-orange-500">
-                Exclusive Sales
-              </button>
-              <button className="px-6 py-3 text-gray-600 hover:text-orange-500">
-                DIY
-              </button>
-              <button className="px-6 py-3 text-gray-600 hover:text-orange-500">
-                SMART HOME
-              </button>
-            </div>
-            
-            {/* Product Grid */}
-            <div className="p-6">
-              <div className="grid grid-cols-5 gap-4">
-                {mockProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+      <div className="pt-32 px-6">
+        <HeroBanner />
+        
+        <ProductCarousel 
+          title="Deals & Special Offers"
+          products={mockProducts}
+          linkText="View All Deals"
+        />
+        
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Exclusive Sales</h2>
+          <div className="grid grid-cols-2 gap-6">
+            {exclusiveProducts.map((product) => (
+              <div key={product.id} className="bg-white p-4 rounded-lg shadow-sm">
+                <div className="w-full h-32 bg-gray-200 rounded mb-3 flex items-center justify-center">
+                  <span className="text-gray-400">Product Image</span>
+                </div>
+                <h3 className="font-medium text-gray-800 mb-2">{product.title}</h3>
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-bold text-red-500">₹{product.price}</span>
+                  <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-          
-          <ProductCarousel 
-            title="Fall in Love With Collections"
-            products={mockProducts.slice(0, 6)}
-          />
         </div>
         
-        {/* Right Sidebar - Exclusive Sales */}
-        <div className="w-80 px-4">
-          <div className="bg-white rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="bg-orange-500 text-white px-2 py-1 rounded text-sm mr-2">Exclusive Sales</span>
-            </h3>
-            
-            <div className="space-y-4">
-              {exclusiveProducts.map((product) => (
-                <div key={product.id} className="border rounded-lg p-3 hover:shadow-md transition-shadow">
-                  <div className="w-full h-24 bg-gray-200 rounded mb-2 flex items-center justify-center">
-                    <span className="text-gray-400 text-xs">Product Image</span>
-                  </div>
-                  <h4 className="text-sm font-medium text-gray-800 mb-2 line-clamp-2">{product.title}</h4>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-sm line-through text-gray-500">₹{product.originalPrice}</span>
-                      <span className="text-lg font-bold text-red-500 ml-2">₹{product.price}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <ProductCarousel 
+          title="Fall in Love With Collections"
+          products={mockProducts.slice(0, 6)}
+        />
+        
+        <div className="text-center mb-6">
+          <button className="bg-orange-500 text-white px-8 py-2 rounded-md hover:bg-orange-600">
+            SHOW MORE
+          </button>
         </div>
+        
+        <ProductCarousel 
+          title="Most Searched Products"
+          products={mostSearchedProducts}
+        />
       </div>
     </Layout>
   );
