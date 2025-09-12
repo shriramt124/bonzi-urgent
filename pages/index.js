@@ -223,29 +223,30 @@ export default function Home() {
               <div className="bg-white rounded-lg shadow-sm p-3">
                 <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
                 
-                <div className="h-72 overflow-hidden relative"></div>
+                <div className="h-72 overflow-hidden relative">
+                  <div className="animate-scroll-vertical space-y-3"></div>
         </div>
-                <div className="animate-scroll-vertical space-y-3">
                   {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
-                    <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
-                      <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
-                        <span className="text-xs text-gray-400">Product Image</span>
-                      </div>
-                      <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
-                        <span className="text-sm font-bold text-red-500">₹{product.price}</span>
-                      </div>
-                      <div className="flex items-center mt-1">
-                        <div className="flex text-yellow-400 text-xs">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
-                          ))}
+                      <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
+                        <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                          <span className="text-xs text-gray-400">Product Image</span>
                         </div>
-                        <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                        <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
+                          <span className="text-sm font-bold text-red-500">₹{product.price}</span>
+                        </div>
+                        <div className="flex items-center mt-1">
+                          <div className="flex text-yellow-400 text-xs">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                            ))}
+                          </div>
+                          <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
