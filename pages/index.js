@@ -2,6 +2,7 @@
 import Layout from '../components/Layout';
 import HeroBanner from '../components/HeroBanner';
 import ProductCarousel from '../components/ProductCarousel';
+import ProductCard from '../components/ProductCard';
 
 // Mock data for products
 const mockProducts = [
