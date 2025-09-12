@@ -75,7 +75,7 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
         </div>
         
         {/* Navigation Links */}
-        <div className="mt-3 flex space-x-8 text-sm">
+        <div className="mt-3 flex justify-center space-x-8 text-sm">
           <Link href="/deals" className="text-gray-600 hover:text-orange-500">Deals & Special Offers</Link>
           <Link href="/exclusive" className="text-gray-600 hover:text-orange-500">Exclusive Sales</Link>
           <Link href="/diy" className="text-gray-600 hover:text-orange-500">DIY</Link>
