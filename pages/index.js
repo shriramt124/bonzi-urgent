@@ -188,6 +188,29 @@ export default function Home() {
           {/* Center Hero Banner */}
           <div className="flex-1">
             <HeroBanner />
+            
+            {/* Deals & Special Offers Section - Right below banner */}
+            <div className="bg-white rounded-lg p-6 mt-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
+                <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
+                  View All Deals →
+                </a>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {mockProducts.slice(0, 5).map((product) => (
+                  <div key={product.id} className="relative">
+                    {/* Discount Badge */}
+                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded z-10">
+                      -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                    </div>
+                    
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Right Exclusive Sales Section */}
@@ -223,28 +246,7 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Deals & Special Offers Section */}
-        <div className="bg-white rounded-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
-            <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
-              View All Deals →
-            </a>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {mockProducts.slice(0, 5).map((product) => (
-              <div key={product.id} className="relative">
-                {/* Discount Badge */}
-                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded z-10">
-                  -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                </div>
-                
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        </div>
+        
         
         <ProductCarousel 
           title="Fall in Love With Collections"
