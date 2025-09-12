@@ -189,15 +189,21 @@ export default function Home() {
           <div className="flex-1">
             <HeroBanner />
             
-            {/* Deals & Special Offers Section - Right below banner */}
-            <div className="bg-white rounded-lg p-6 mt-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
-                <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
-                  View All Deals →
-                </a>
-              </div>
-              
+            </div>
+        </div>
+        
+        {/* Deals & Special Offers Section - Full width */}
+        <div className="bg-white rounded-lg p-6 mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
+            <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
+              View All Deals →
+            </a>
+          </div>
+          
+          <div className="flex gap-6">
+            {/* Main deals grid */}
+            <div className="flex-1">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {mockProducts.slice(0, 5).map((product) => (
                   <div key={product.id} className="relative">
@@ -211,14 +217,14 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </div>
-
-          {/* Right Exclusive Sales Section */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-3">
-              <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
-              
-              <div className="h-96 overflow-hidden relative">
+            
+            {/* Right Exclusive Sales Section - Reduced height */}
+            <div className="w-56 flex-shrink-0">
+              <div className="bg-white rounded-lg shadow-sm p-3">
+                <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
+                
+                <div className="h-72 overflow-hidden relative"></div>
+        </div>
                 <div className="animate-scroll-vertical space-y-3">
                   {[...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
                     <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
