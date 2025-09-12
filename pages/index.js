@@ -2,6 +2,7 @@
 import Layout from '../components/Layout';
 import HeroBanner from '../components/HeroBanner';
 import ProductCarousel from '../components/ProductCarousel';
+import ProductCard from '../components/ProductCard';
 
 // Mock data for products
 const mockProducts = [
@@ -136,34 +137,95 @@ const mostSearchedProducts = [
 ];
 
 export default function Home() {
+  const categories = [
+    { name: 'Apparel Accessories', icon: '👕' },
+    { name: 'Computer and Office', icon: '💻' },
+    { name: 'Consumer Electronics', icon: '📱' },
+    { name: 'Electronic Components', icon: '🔌' },
+    { name: 'Home & Garden', icon: '🏡' },
+    { name: 'Home Appliances', icon: '🔧' },
+    { name: 'Home Improvement', icon: '🔨' },
+    { name: 'Jewelry and Accessories', icon: '💎' },
+    { name: 'Lights & Lighting', icon: '💡' },
+    { name: 'Luggage & Bags', icon: '🎒' },
+    { name: 'Shoes', icon: '👟' },
+    { name: 'Office & School Supplies', icon: '📚' },
+    { name: 'Security & Protection', icon: '🔒' },
+    { name: 'Sports & Entertainment', icon: '⚽' },
+    { name: 'Toys & Hobbies', icon: '🎮' },
+  ];
+
   return (
     <Layout>
       <div className="pt-32 px-6">
-        <HeroBanner />
+        {/* Main three-column layout */}
+        <div className="flex gap-6 mb-6">
+          {/* Left Categories Section */}
+          <div className="w-64 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm p-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+                Categories
+              </h3>
+              
+              <div className="space-y-2">
+                {categories.map((category, index) => (
+                  <a
+                    key={index}
+                    href="#"
+                    className="flex items-center p-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors"
+                  >
+                    <span className="mr-3 text-lg">{category.icon}</span>
+                    <span className="text-sm">{category.name}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Center Hero Banner */}
+          <div className="flex-1">
+            <HeroBanner />
+          </div>
+
+          {/* Right Exclusive Sales Section */}
+          <div className="w-64 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm p-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 text-orange-500">Exclusive Sales</h3>
+              
+              <div className="space-y-4">
+                {exclusiveProducts.map((product) => (
+                  <div key={product.id} className="border-b pb-4 last:border-b-0">
+                    <div className="w-full h-24 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                      <span className="text-xs text-gray-400">Product Image</span>
+                    </div>
+                    <h4 className="font-medium text-gray-800 text-sm mb-2 line-clamp-2">{product.title}</h4>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
+                      <span className="text-lg font-bold text-red-500">₹{product.price}</span>
+                    </div>
+                    <div className="flex items-center mt-1">
+                      <div className="flex text-yellow-400 text-xs">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                        ))}
+                      </div>
+                      <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
         
         <ProductCarousel 
           title="Deals & Special Offers"
           products={mockProducts}
           linkText="View All Deals"
         />
-        
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Exclusive Sales</h2>
-          <div className="grid grid-cols-2 gap-6">
-            {exclusiveProducts.map((product) => (
-              <div key={product.id} className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="w-full h-32 bg-gray-200 rounded mb-3 flex items-center justify-center">
-                  <span className="text-gray-400">Product Image</span>
-                </div>
-                <h3 className="font-medium text-gray-800 mb-2">{product.title}</h3>
-                <div className="flex items-center space-x-2">
-                  <span className="text-lg font-bold text-red-500">₹{product.price}</span>
-                  <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
         
         <ProductCarousel 
           title="Fall in Love With Collections"
