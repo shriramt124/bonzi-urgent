@@ -68,6 +68,142 @@ const mockProducts = [
     originalPrice: 695.00,
     rating: 4,
     reviews: 89
+  },
+  {
+    id: 9,
+    title: "Wireless Bluetooth Headphones with Noise Cancellation",
+    price: 899.00,
+    originalPrice: 1299.00,
+    rating: 4,
+    reviews: 312
+  },
+  {
+    id: 10,
+    title: "Smart Fitness Tracker with Heart Rate Monitor",
+    price: 1299.00,
+    originalPrice: 1799.00,
+    rating: 5,
+    reviews: 456
+  },
+  {
+    id: 11,
+    title: "Professional DSLR Camera with 18-55mm Lens",
+    price: 25999.00,
+    originalPrice: 32999.00,
+    rating: 4,
+    reviews: 89
+  },
+  {
+    id: 12,
+    title: "Gaming Mechanical Keyboard RGB Backlit",
+    price: 3499.00,
+    originalPrice: 4999.00,
+    rating: 5,
+    reviews: 234
+  },
+  {
+    id: 13,
+    title: "4K Ultra HD Smart LED Television 55 inch",
+    price: 45999.00,
+    originalPrice: 59999.00,
+    rating: 4,
+    reviews: 167
+  },
+  {
+    id: 14,
+    title: "Portable Power Bank 20000mAh Fast Charging",
+    price: 1299.00,
+    originalPrice: 1999.00,
+    rating: 4,
+    reviews: 523
+  },
+  {
+    id: 15,
+    title: "Stainless Steel Electric Kettle 1.7L Capacity",
+    price: 1899.00,
+    originalPrice: 2499.00,
+    rating: 5,
+    reviews: 298
+  },
+  {
+    id: 16,
+    title: "Cordless Vacuum Cleaner with HEPA Filter",
+    price: 15999.00,
+    originalPrice: 21999.00,
+    rating: 4,
+    reviews: 145
+  },
+  {
+    id: 17,
+    title: "Wireless Charging Pad with Fast Charge Technology",
+    price: 899.00,
+    originalPrice: 1299.00,
+    rating: 4,
+    reviews: 378
+  },
+  {
+    id: 18,
+    title: "Professional Hair Dryer with Ionic Technology",
+    price: 2499.00,
+    originalPrice: 3499.00,
+    rating: 5,
+    reviews: 201
+  },
+  {
+    id: 19,
+    title: "Smart Home Security Camera with Night Vision",
+    price: 3499.00,
+    originalPrice: 4999.00,
+    rating: 4,
+    reviews: 412
+  },
+  {
+    id: 20,
+    title: "Bluetooth Wireless Speaker Waterproof",
+    price: 2999.00,
+    originalPrice: 3999.00,
+    rating: 5,
+    reviews: 567
+  },
+  {
+    id: 21,
+    title: "Ergonomic Office Chair with Lumbar Support",
+    price: 8999.00,
+    originalPrice: 12999.00,
+    rating: 4,
+    reviews: 189
+  },
+  {
+    id: 22,
+    title: "Digital Drawing Tablet with Stylus Pen",
+    price: 4999.00,
+    originalPrice: 6999.00,
+    rating: 5,
+    reviews: 156
+  },
+  {
+    id: 23,
+    title: "Coffee Maker with Built-in Grinder",
+    price: 7999.00,
+    originalPrice: 10999.00,
+    rating: 4,
+    reviews: 234
+  },
+  {
+    id: 24,
+    title: "LED Strip Lights RGB with Remote Control",
+    price: 799.00,
+    originalPrice: 1199.00,
+    rating: 4,
+    reviews: 445
+  },
+  {
+    id: 25,
+    title: "Wireless Gaming Mouse with RGB Lighting",
+    price: 1499.00,
+    originalPrice: 1999.00,
+    rating: 5,
+    reviews: 678
   }
 ];
 
@@ -156,52 +292,88 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="pt-32 px-6">
-        {/* Main three-column layout */}
-        <div className="flex gap-6 mb-6">
-          {/* Left Categories Section */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-3">
-              <h3 className="text-base font-semibold text-gray-800 mb-3 flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="pt-20 sm:pt-24 md:pt-28">
+        {/* Mobile: Stack layout, Tablet/Desktop: Side-by-side layout */}
+        <div className="block lg:grid lg:grid-cols-12 lg:gap-6 lg:items-stretch">
+          {/* Categories Section - Desktop: Sidebar only */}
+          <div className="hidden lg:block lg:col-span-2 lg:h-full">
+            <div className="bg-white rounded-lg shadow-sm p-3 lg:h-full lg:sticky lg:top-24 lg:flex lg:flex-col">
+              <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center flex-shrink-0">
+                <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
                 </svg>
                 Categories
               </h3>
 
-              <div className="space-y-1">
+              {/* Desktop: Vertical scroll */}
+              <div className="flex flex-col gap-1 flex-1 overflow-y-auto space-y-1 pb-0">
                 {categories.map((category, index) => (
                   <a
                     key={index}
                     href="#"
-                    className="flex items-center py-2 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs"
+                    className="flex items-center py-2 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs whitespace-normal flex-shrink"
                   >
                     <span className="mr-2 text-sm">{category.icon}</span>
-                    <span className="text-xs">{category.name}</span>
+                    <span>{category.name}</span>
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Center Hero Banner */}
-          <div className="flex-1">
-            <HeroBanner />
-
-            {/* Deals & Special Offers Section - Right below banner */}
-            <div className="bg-white rounded-lg p-6 mt-6 flex-1">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">Deals & Special Offers</h2>
-                <a href="#" className="text-orange-500 hover:text-orange-600 text-sm font-medium">
-                  View All Deals →
-                </a>
+          {/* Main Content Area */}
+          <div className="w-full lg:col-span-10 lg:space-y-4 lg:h-full">
+            {/* Hero Banner + Exclusive Sales - Mobile: Hero only, Tablet+: Side-by-side */}
+            <div className="block md:grid md:grid-cols-10 md:gap-6 md:mb-4 space-y-4 md:space-y-0">
+              {/* Hero Banner - Full width on mobile, 7/10 on tablet+ */}
+              <div className="w-full md:col-span-7">
+                <div className="h-64 sm:h-72 md:h-80">
+                  <HeroBanner />
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {/* Exclusive Sales - Hidden on mobile, 3/10 on tablet+ */}
+              <div className="hidden md:block md:col-span-3">
+                <div className="bg-white rounded-lg shadow-sm p-3 h-64 sm:h-72 md:h-80">
+                  <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
+
+                  <div className="h-48 sm:h-56 md:h-64 overflow-hidden relative">
+                    <div className="animate-scroll-vertical space-y-3">
+                      {[...exclusiveProducts, ...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
+                        <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
+                          <div className="w-full h-16 sm:h-18 md:h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
+                            <span className="text-xs text-gray-400">Product Image</span>
+                          </div>
+                          <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
+                            <span className="text-sm font-bold text-red-500">₹{product.price}</span>
+                          </div>
+                          <div className="flex items-center mt-1">
+                            <div className="flex text-yellow-400 text-xs">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                              ))}
+                            </div>
+                            <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Deals & Special Offers - Responsive grid */}
+            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Deals & Special Offers</h2>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4">
                 {mockProducts.slice(0, 5).map((product) => (
-                  <div key={product.id} className="relative">
+                  <div key={product.id} className="relative group">
                     {/* Discount Badge */}
-                    <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded z-10">
+                    <div className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-red-500 text-white text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded-full z-10 font-bold">
                       -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
                     </div>
 
@@ -211,55 +383,28 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* Right Exclusive Sales Section */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-sm p-3 h-full">
-              <h3 className="text-base font-semibold text-orange-500 mb-3">Exclusive Sales</h3>
-
-              <div className="h-96 overflow-hidden relative">
-                <div className="animate-scroll-vertical space-y-3">
-                  {[...exclusiveProducts, ...exclusiveProducts, ...exclusiveProducts].map((product, index) => (
-                    <div key={`${product.id}-${index}`} className="border-b pb-3 last:border-b-0">
-                      <div className="w-full h-20 bg-gray-200 rounded mb-2 flex items-center justify-center">
-                        <span className="text-xs text-gray-400">Product Image</span>
-                      </div>
-                      <h4 className="font-medium text-gray-800 text-xs mb-2 line-clamp-2">{product.title}</h4>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-gray-500 text-xs line-through">₹{product.originalPrice}</span>
-                        <span className="text-sm font-bold text-red-500">₹{product.price}</span>
-                      </div>
-                      <div className="flex items-center mt-1">
-                        <div className="flex text-yellow-400 text-xs">
-                          {[...Array(5)].map((_, i) => (
-                            <span key={i} className={i < product.rating ? 'text-yellow-400' : 'text-gray-300'}>★</span>
-                          ))}
-                        </div>
-                        <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <ProductCarousel 
-          title="Fall in Love With Collections"
-          products={mockProducts.slice(0, 6)}
-        />
+        {/* Product Carousels - Full width */}
+        <div className="mt-4 sm:mt-6 lg:-mt-4">
+          <ProductCarousel 
+            title="Fall in Love With Collections"
+            products={mockProducts}
+          />
+        </div>
 
-        <div className="text-center mb-6">
-          <button className="bg-orange-500 text-white px-8 py-2 rounded-md hover:bg-orange-600">
+        <div className="text-center my-4 sm:my-6">
+          <button className="bg-orange-500 text-white px-6 sm:px-8 py-2 sm:py-2 rounded-md hover:bg-orange-600 transition-colors text-sm sm:text-base">
             SHOW MORE
           </button>
         </div>
 
-        <ProductCarousel 
-          title="Most Searched Products"
-          products={mostSearchedProducts}
-        />
+        <div className="mb-6 sm:mb-8">
+          <ProductCarousel 
+            title="Most Searched Products"
+            products={mostSearchedProducts}
+          />
+        </div>
       </div>
     </Layout>
   );

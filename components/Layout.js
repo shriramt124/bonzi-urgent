@@ -19,20 +19,23 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header 
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        scrolled={scrolled}
-      />
-      
-      <div className="flex">
-        <Sidebar isOpen={sidebarOpen} />
-        <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all duration-300`}>
-          {children}
-        </main>
+      {/* Consistent Container Wrapper */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Header 
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          scrolled={scrolled}
+        />
+        
+        <div className="flex">
+          <Sidebar isOpen={sidebarOpen} />
+          <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all duration-300`}>
+            {children}
+          </main>
+        </div>
+        
+        <Footer />
       </div>
-      
-      <Footer />
     </div>
   );
 }
