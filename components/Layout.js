@@ -18,7 +18,7 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Consistent Container Wrapper */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Header 
@@ -27,15 +27,15 @@ export default function Layout({ children }) {
           scrolled={scrolled}
         />
         
-        <div className="flex">
+        <div className="flex mt-4">
           <Sidebar isOpen={sidebarOpen} />
           <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all duration-300`}>
             {children}
           </main>
         </div>
-        
-        <Footer />
       </div>
+      
+      <Footer />
     </div>
   );
 }

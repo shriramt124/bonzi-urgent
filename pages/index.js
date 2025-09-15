@@ -2,6 +2,9 @@ import Layout from '../components/Layout';
 import HeroBanner from '../components/HeroBanner';
 import ProductCarousel from '../components/ProductCarousel';
 import ProductCard from '../components/ProductCard';
+import { 
+  FaTshirt, FaLaptop, FaMobileAlt, FaMicrochip, FaHome, FaBlender, FaTools, FaGem, FaLightbulb, FaSuitcase, FaShoePrints, FaBook, FaShieldAlt, FaFutbol, FaGamepad 
+} from 'react-icons/fa';
 
 // Mock data for products
 const mockProducts = [
@@ -273,31 +276,31 @@ const mostSearchedProducts = [
 
 export default function Home() {
   const categories = [
-    { name: 'Apparel Accessories', icon: '👕' },
-    { name: 'Computer and Office', icon: '💻' },
-    { name: 'Consumer Electronics', icon: '📱' },
-    { name: 'Electronic Components', icon: '🔌' },
-    { name: 'Home & Garden', icon: '🏡' },
-    { name: 'Home Appliances', icon: '🔧' },
-    { name: 'Home Improvement', icon: '🔨' },
-    { name: 'Jewelry and Accessories', icon: '💎' },
-    { name: 'Lights & Lighting', icon: '💡' },
-    { name: 'Luggage & Bags', icon: '🎒' },
-    { name: 'Shoes', icon: '👟' },
-    { name: 'Office & School Supplies', icon: '📚' },
-    { name: 'Security & Protection', icon: '🔒' },
-    { name: 'Sports & Entertainment', icon: '⚽' },
-    { name: 'Toys & Hobbies', icon: '🎮' },
+    { name: 'Apparel Accessories', icon: <FaTshirt /> },
+    { name: 'Computer and Office', icon: <FaLaptop /> },
+    { name: 'Consumer Electronics', icon: <FaMobileAlt /> },
+    { name: 'Electronic Components', icon: <FaMicrochip /> },
+    { name: 'Home & Garden', icon: <FaHome /> },
+    { name: 'Home Appliances', icon: <FaBlender /> },
+    { name: 'Home Improvement', icon: <FaTools /> },
+    { name: 'Jewelry and Accessories', icon: <FaGem /> },
+    { name: 'Lights & Lighting', icon: <FaLightbulb /> },
+    { name: 'Luggage & Bags', icon: <FaSuitcase /> },
+    { name: 'Shoes', icon: <FaShoePrints /> },
+    { name: 'Office & School Supplies', icon: <FaBook /> },
+    { name: 'Security & Protection', icon: <FaShieldAlt /> },
+    { name: 'Sports & Entertainment', icon: <FaFutbol /> },
+    { name: 'Toys & Hobbies', icon: <FaGamepad /> },
   ];
 
   return (
     <Layout>
       <div className="pt-20 sm:pt-24 md:pt-28">
         {/* Mobile: Stack layout, Tablet/Desktop: Side-by-side layout */}
-        <div className="block lg:grid lg:grid-cols-12 lg:gap-6 lg:items-stretch">
+        <div className="block lg:flex lg:gap-2 lg:items-stretch">
           {/* Categories Section - Desktop: Sidebar only */}
-          <div className="hidden lg:block lg:col-span-2 lg:h-full">
-            <div className="bg-white rounded-lg shadow-sm p-3 lg:h-full lg:sticky lg:top-24 lg:flex lg:flex-col">
+          <div className="hidden lg:block lg:w-60 lg:flex-shrink-0 min-h-[680px] h-full min-w-[190px]">
+            <div className="bg-white rounded-lg shadow-sm p-3 h-full sticky top-24 flex flex-col min-h-0">
               <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center flex-shrink-0">
                 <svg className="w-3 h-3 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
@@ -306,14 +309,14 @@ export default function Home() {
               </h3>
 
               {/* Desktop: Vertical scroll */}
-              <div className="flex flex-col gap-1 flex-1 overflow-y-auto space-y-1 pb-0">
+              <div className="flex flex-col gap-2 flex-1 min-h-0 overflow-y-auto pb-0 px-1">
                 {categories.map((category, index) => (
                   <a
                     key={index}
                     href="#"
-                    className="flex items-center py-2 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs whitespace-normal flex-shrink"
+                    className="flex items-center py-1.5 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs whitespace-normal flex-shrink"
                   >
-                    <span className="mr-2 text-sm">{category.icon}</span>
+                    <span className="mr-2 text-base">{category.icon}</span>
                     <span>{category.name}</span>
                   </a>
                 ))}
@@ -322,7 +325,7 @@ export default function Home() {
           </div>
 
           {/* Main Content Area */}
-          <div className="w-full lg:col-span-10 lg:space-y-4 lg:h-full">
+          <div className="w-full lg:flex-1 lg:ml-2 lg:space-y-4 lg:h-full">
             {/* Hero Banner + Exclusive Sales - Mobile: Hero only, Tablet+: Side-by-side */}
             <div className="block md:grid md:grid-cols-10 md:gap-6 md:mb-4 space-y-4 md:space-y-0">
               {/* Hero Banner - Full width on mobile, 7/10 on tablet+ */}
@@ -365,8 +368,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Deals & Special Offers - Responsive grid */}
-            <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4">
+            {/* Deals & Special Offers - Full width below banner and exclusive sales */}
+            <div className="bg-white rounded-lg shadow-sm  sm:p-4">
               <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Deals & Special Offers</h2>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-3 sm:gap-4">
@@ -386,7 +389,7 @@ export default function Home() {
         </div>
 
         {/* Product Carousels - Full width */}
-        <div className="mt-4 sm:mt-6 lg:-mt-4">
+        <div className="mt-8 sm:mt-10 lg:mt-10">
           <ProductCarousel 
             title="Fall in Love With Collections"
             products={mockProducts}

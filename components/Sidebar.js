@@ -1,20 +1,24 @@
 
+import { 
+  FaTshirt, FaLaptop, FaMobileAlt, FaMicrochip, FaHome, FaBlender, FaTools, FaGem, FaLightbulb, FaSuitcase, FaShoePrints, FaBook, FaShieldAlt, FaFutbol, FaGamepad 
+} from 'react-icons/fa';
+
 export default function Sidebar({ isOpen }) {
   const categories = [
-    { name: 'Apparel Accessories', icon: '👕' },
-    { name: 'Computer and Office', icon: '💻' },
-    { name: 'Consumer Electronics', icon: '📱' },
-    { name: 'Electronic Components', icon: '🔌' },
-    { name: 'Home & Garden', icon: '🏡' },
-    { name: 'Home Appliances', icon: '🔧' },
-    { name: 'Home Improvement', icon: '🔨' },
-    { name: 'Jewelry and Accessories', icon: '💎' },
-    { name: 'Lights & Lighting', icon: '💡' },
-    { name: 'Luggage & Bags', icon: '🎒' },
-    { name: 'Shoes', icon: '👟' },
-    { name: 'Office & School Supplies', icon: '📚' },
-    { name: 'Security & Protection', icon: '🔒' },
-    { name: 'Toys & Hobbies', icon: '🎮' },
+    { name: 'Apparel Accessories', icon: <FaTshirt /> },
+    { name: 'Computer and Office', icon: <FaLaptop /> },
+    { name: 'Consumer Electronics', icon: <FaMobileAlt /> },
+    { name: 'Electronic Components', icon: <FaMicrochip /> },
+    { name: 'Home & Garden', icon: <FaHome /> },
+    { name: 'Home Appliances', icon: <FaBlender /> },
+    { name: 'Home Improvement', icon: <FaTools /> },
+    { name: 'Jewelry and Accessories', icon: <FaGem /> },
+    { name: 'Lights & Lighting', icon: <FaLightbulb /> },
+    { name: 'Luggage & Bags', icon: <FaSuitcase /> },
+    { name: 'Shoes', icon: <FaShoePrints /> },
+    { name: 'Office & School Supplies', icon: <FaBook /> },
+    { name: 'Security & Protection', icon: <FaShieldAlt /> },
+    { name: 'Toys & Hobbies', icon: <FaGamepad /> },
   ];
 
   return (
@@ -36,7 +40,7 @@ export default function Sidebar({ isOpen }) {
               href="#"
               className="flex items-center p-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors"
             >
-              <span className="mr-3 text-lg">{category.icon}</span>
+              <span className="mr-3 text-base">{category.icon}</span>
               <span className="text-sm">{category.name}</span>
             </a>
           ))}
