@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PostQuestionModal from './PostQuestionModal';
 
 const FAQItem = ({ question, answer, isOpen, onToggle }) => {
   return (
@@ -76,14 +77,15 @@ const FAQ = ({ product }) => {
     }
   ];
 
+  const [showPostModal, setShowPostModal] = useState(false);
+
+  const handlePostSubmit = (text) => {
+    // TODO: replace with real API call - for now just log
+    console.log('Posted question:', text);
+  };
+
   return (
     <div className="space-y-4">
-      {/* FAQ Header */}
-      <div className="text-center mb-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-2">Frequently Asked Questions</h3>
-        <p className="text-sm text-gray-600">Find answers to common questions about this product</p>
-      </div>
-
       {/* FAQ Items */}
       <div className="space-y-3">
         {faqs.map((faq, index) => (
@@ -106,12 +108,13 @@ const FAQ = ({ product }) => {
             <button className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors text-sm font-semibold">
               Contact Support
             </button>
-            <button className="border border-orange-500 text-orange-500 px-4 py-2 rounded-lg hover:bg-orange-50 transition-colors text-sm font-semibold">
-              Live Chat
+            <button onClick={() => setShowPostModal(true)} className="border border-orange-500 text-orange-500 px-4 py-2 rounded-lg hover:bg-orange-50 transition-colors text-sm font-semibold">
+              Post Question
             </button>
           </div>
         </div>
       </div>
+      <PostQuestionModal open={showPostModal} onClose={() => setShowPostModal(false)} onSubmit={handlePostSubmit} />
     </div>
   );
 };
