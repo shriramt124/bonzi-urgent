@@ -111,11 +111,11 @@ export default function ProductDetail() {
 
   return (
     <Layout>
-      <div className="bg-gray-50 py-4">
+      <div className="bg-gray-100 py-4">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Main Product Section */}
-          <div className="bg-gray-300 p-2 md:p-4 rounded-lg shadow-sm flex flex-col md:flex-row gap-4">
+          <div className="bg-white p-2 md:p-4 rounded-lg shadow-sm flex flex-col md:flex-row gap-4">
             {/* Left: Product Gallery */}
             <div className="w-full flex flex-col items-center">
               <div className="w-full max-w-sm md:max-w-md aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-4">
