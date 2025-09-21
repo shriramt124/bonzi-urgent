@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Allow requests from any host for Replit proxy
+  experimental: {
+    allowedHosts: ['*'],
+  },
   async headers() {
     return [
       {
