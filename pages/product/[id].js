@@ -125,6 +125,8 @@ export default function ProductDetail() {
       stock: parseInt(apiData.stock || 0),
       codAvailable: apiData.isCOD === 1,
       specifications: specifications,
+      productSpecifications: apiData.product_specification || [],
+      feedbackRating: apiData.feedback_rating || {},
       description: apiData.short_desc || '',
       colors: apiData.product_color ? apiData.product_color.map(color => color.color) : ['Default'],
       discount_percentage: parseInt(apiData.discount_percentage || 0),

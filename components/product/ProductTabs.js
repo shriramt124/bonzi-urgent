@@ -42,12 +42,28 @@ export default function ProductTabs({ product, productDescription, activeTab, se
         {activeTab === 'details' && (
           <div className="space-y-8">
             <div>
-              <h3 className="text-base font-bold text-gray-800 mb-3">Specification</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-3 text-sm">
-                {Object.entries(product.specifications).map(([key, value]) => (
-                  <div key={key}>
-                    <span className="font-semibold text-gray-600">{key}:</span>{' '}
-                    <span className="text-gray-800">{value}</span>
+              <h3 className="text-lg font-bold text-orange-500 mb-4">Specification</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {product.productSpecifications && product.productSpecifications.map((spec, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex-shrink-0">
+                      <img 
+                        src={spec.image} 
+                        alt={spec.PropertyName}
+                        className="w-8 h-8 object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-blue-600 mb-1">
+                        {spec.PropertyName}
+                      </div>
+                      <div className="text-sm text-gray-800 font-medium">
+                        {spec.PropertyValue}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -81,40 +97,98 @@ export default function ProductTabs({ product, productDescription, activeTab, se
           </div>
         )}
         {activeTab === 'feedback' && (
-          <div className="border border-orange-400 rounded-b-lg bg-white" style={{ borderTop: 'none' }}>
-            <div className="p-0">
-              <div className="flex flex-col gap-2 px-4 pt-4">
+          <div className="bg-white">
+            <div className="p-4">
+              <div className="flex items-center gap-4 mb-4">
                 <div className="text-orange-600 font-semibold text-base">
-                  0 (0 feedback) <span className="text-xs">|</span> <span className="text-orange-600">0 Orders</span>
+                  {product.feedbackRating?.avg_rate || 0} ({product.feedbackRating?.total_feedback || 0} feedback)
                 </div>
-                <div className="flex items-center gap-4 mb-2">
+                <span className="text-gray-400">|</span>
+                <div className="text-orange-600 font-semibold text-base">
+                  {product.orders || 0} Orders
+                </div>
+                <div className="flex items-center gap-2 ml-auto">
                   <span className="flex items-center gap-1 text-gray-500 text-sm">
-                    <svg width="18" height="18" fill="currentColor" className="inline"><path d="M14 9v1a5 5 0 01-10 0V9"/></svg> 0
+                    <svg width="16" height="16" fill="currentColor" className="text-gray-400">
+                      <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 11V9h2v2H7zm0-4V5h2v2H7z"/>
+                    </svg>
+                    {product.feedbackRating?.rate1 || 0}
                   </span>
                   <span className="flex items-center gap-1 text-gray-500 text-sm">
-                    <svg width="18" height="18" fill="currentColor" className="inline"><path d="M10 9v1a5 5 0 01-10 0V9"/></svg> 0
+                    <svg width="16" height="16" fill="currentColor" className="text-gray-400">
+                      <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 11V9h2v2H7zm0-4V5h2v2H7z"/>
+                    </svg>
+                    {product.feedbackRating?.rate5 || 0}
                   </span>
-                </div>
-                <div className="font-bold text-gray-800 mb-2">0 Out Of 5 Stars</div>
-                <div className="space-y-1 mb-4">
-                  {[5,4,3,2,1].map(star => (
-                    <div key={star} className="flex items-center gap-2 text-xs">
-                      <span className="w-16 text-right">{star} stars :</span>
-                      <div className="flex-1 h-1 bg-gray-200 rounded mx-2" />
-                      <span className="w-8 text-center">0</span>
-                    </div>
-                  ))}
                 </div>
               </div>
-              <div className="flex w-full mt-8 border-t border-orange-400">
-                <div className="flex-1 text-center py-3 text-orange-600 font-semibold text-lg border-r border-orange-400" style={{ background: 'none' }}>
-                  Product Feedback
-                </div>
-                <div className="flex-1 text-center py-3 text-orange-600 font-semibold text-lg bg-gray-50">
-                  All FeedBack
-                </div>
+              
+              <div className="font-bold text-gray-800 mb-4 text-lg">
+                {product.feedbackRating?.avg_rate || 0} Out Of 5 Stars
+              </div>
+              
+              <div className="space-y-2 mb-6">
+                {[5,4,3,2,1].map(star => {
+                  const rateKey = `rate${star}`;
+                  const count = product.feedbackRating?.[rateKey] || 0;
+                  const total = product.feedbackRating?.total_feedback || 1;
+                  const percentage = total > 0 ? (count / total) * 100 : 0;
+                  
+                  return (
+                    <div key={star} className="flex items-center gap-3 text-sm">
+                      <span className="w-12 text-right font-medium">{star} stars</span>
+                      <span className="text-gray-500">:</span>
+                      <div className="flex-1 h-2 bg-gray-200 rounded-full mx-2 overflow-hidden">
+                        <div 
+                          className="h-full bg-orange-400 rounded-full transition-all duration-300"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                      <span className="w-8 text-center font-medium">{count}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
+            
+            <div className="flex border-t border-orange-200">
+              <button 
+                onClick={() => setFeedbackSubTab('product')}
+                className={`flex-1 text-center py-4 font-semibold text-base transition-colors ${
+                  feedbackSubTab === 'product' 
+                    ? 'text-orange-600 bg-white border-b-2 border-orange-600' 
+                    : 'text-orange-400 bg-gray-50 hover:bg-gray-100'
+                }`}
+              >
+                Product Feedback
+              </button>
+              <button 
+                onClick={() => setFeedbackSubTab('all')}
+                className={`flex-1 text-center py-4 font-semibold text-base transition-colors ${
+                  feedbackSubTab === 'all' 
+                    ? 'text-orange-600 bg-white border-b-2 border-orange-600' 
+                    : 'text-orange-400 bg-gray-50 hover:bg-gray-100'
+                }`}
+              >
+                All FeedBack
+              </button>
+            </div>
+            
+            {feedbackSubTab === 'product' && (
+              <div className="p-4">
+                <div className="text-center text-gray-500 py-8">
+                  No product feedback available yet.
+                </div>
+              </div>
+            )}
+            
+            {feedbackSubTab === 'all' && (
+              <div className="p-4">
+                <div className="text-center text-gray-500 py-8">
+                  No feedback available yet.
+                </div>
+              </div>
+            )}
           </div>
         )}
         {activeTab === 'faq' && <FAQ product={product} />}
