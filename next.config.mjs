@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Allow all origins for Replit proxy environment
-  allowedDevOrigins: ['*'],
+  // Allow Replit proxy domains
+  allowedDevOrigins: [
+    '*.replit.dev',
+    '*.repl.co',
+    'localhost',
+    '127.0.0.1'
+  ],
   async headers() {
     return [
       {
