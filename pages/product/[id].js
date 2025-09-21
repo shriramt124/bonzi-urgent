@@ -1,112 +1,177 @@
+
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ContactSellerModal from '../../components/ContactSellerModal';
 import ProductTabs from '../../components/product/ProductTabs';
 import RelatedProducts from '../../components/product/RelatedProducts';
 
-// Mock product data based on the provided screenshots
-const mockProductData = {
-  1: {
-    id: 1,
-    name: "Stylish Silver Bow Pendant Necklace Perfect Gift for Women Elegant and Timeless Jewellery for Special Occasions",
-    media: [
-      { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', thumbnail: 'https://i.imgur.com/tis2t1L.png' },
-      { type: 'image', url: 'https://i.imgur.com/tis2t1L.png' },
-      { type: 'image', url: 'https://i.imgur.com/8OKw2v2.png' },
-      { type: 'image', url: 'https://i.imgur.com/Kk2wzcb.png' },
-      { type: 'image', url: 'https://i.imgur.com/Kk2wzcb.png' },
-    ],
-    productImages: [
-      'https://i.imgur.com/tis2t1L.png',
-      'https://i.imgur.com/8OKw2v2.png',
-      'https://i.imgur.com/Kk2wzcb.png',
-      'https://i.imgur.com/8OKw2v2.png',
-    ],
-    rating: 0,
-    reviews: 0,
-    orders: 1,
-    priceDetails: {
-      mrp: 299.00,
-      price: 165.00,
-      finalPrice: 169.95,
-    },
-    bulkPricing: [
-      { from: 20, to: 49, price: 205 },
-      { from: 50, to: 99, price: 199 },
-    ],
-    seller: 'Flippycart',
-    positiveSentiment: 95,
-    followers: 1200,
-    shippingInfo: {
-      Replacement: '7 Days',
-      Processing: '15 days',
-      Shipping: '4 days',
-      Seller: 'Delhi',
-      Warranty: 'No',
-    },
-    stock: 21,
-    codAvailable: false,
-    specifications: {
-      Color: 'Silver',
-      Material: 'Alloy',
-      Occasion: 'Special Occasions',
-      Style: 'Pendant Necklace',
-    },
-    description: "This **Stylish Silver Bow Pendant Necklace** is a perfect gift for women. Its elegant and timeless design makes it suitable for any special occasion. Crafted with high-quality materials, this jewellery piece adds a touch of sophistication to any outfit.",
-    sizeChart: { /* ... */ },
-    keyFeatures: [ /* ... */ ],
-    pros: [ /* ... */ ],
-    cons: [ /* ... */ ],
-    relatedProducts: [
-      {
-        id: 2,
-        name: "Elegant Gold Plated Drop Earrings",
-        price: 120.00,
-        originalPrice: 150.00,
-        discount: 20,
-        media: [
-          { type: 'image', url: 'https://i.imgur.com/8OKw2v2.png', thumbnail: 'https://i.imgur.com/8OKw2v2.png' },
-        ],
-      },
-      {
-        id: 3,
-        name: "Classic Pearl Stud Earrings",
-        price: 80.00,
-        originalPrice: 100.00,
-        discount: 20,
-        media: [
-          { type: 'image', url: 'https://i.imgur.com/Kk2wzcb.png', thumbnail: 'https://i.imgur.com/Kk2wzcb.png' },
-        ],
-      },
-      // Add more related products as needed
-    ]
-  },
-  // Add more products as needed
-};
-
 export default function ProductDetail() {
   const router = useRouter();
   const { id } = router.query;
-  const product = mockProductData[id] || mockProductData[1]; // Fallback to product 1
-  const [selectedMedia, setSelectedMedia] = useState(product.media[0]);
+  const [product, setProduct] = useState(null);
+  const [productDescription, setProductDescription] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedMedia, setSelectedMedia] = useState(null);
   const [activeTab, setActiveTab] = useState('details');
   const [feedbackSubTab, setFeedbackSubTab] = useState('product');
   const [quantity, setQuantity] = useState(1);
   const [showBulkPrice, setShowBulkPrice] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
 
+  useEffect(() => {
+    if (id) {
+      fetchProductData();
+    }
+  }, [id]);
+
+  const fetchProductData = async () => {
+    try {
+      setLoading(true);
+      
+      // Fetch product details
+      const productResponse = await fetch(`https://api.glst.in/api/v2/product?product_id=${id}`);
+      const productData = await productResponse.json();
+      
+      if (!productData.success) {
+        throw new Error(productData.message || 'Failed to fetch product data');
+      }
+
+      // Fetch product description
+      const descriptionResponse = await fetch(`https://api.glst.in/api/v1/product-description/${id}`);
+      const descriptionData = await descriptionResponse.json();
+
+      if (descriptionData.success) {
+        setProductDescription(descriptionData.data);
+      }
+
+      // Transform API data to match component structure
+      const transformedProduct = transformApiData(productData.data);
+      setProduct(transformedProduct);
+      
+      // Set initial selected media
+      if (transformedProduct.media && transformedProduct.media.length > 0) {
+        setSelectedMedia(transformedProduct.media[0]);
+      }
+
+    } catch (err) {
+      setError(err.message);
+      console.error('Error fetching product data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const transformApiData = (apiData) => {
+    // Transform API data structure to match existing component expectations
+    const media = [];
+    
+    // Add product images as media
+    if (apiData.product_image && apiData.product_image.length > 0) {
+      apiData.product_image.forEach((img, index) => {
+        media.push({
+          type: 'image',
+          url: img.ImageLink,
+          thumbnail: img.ImageLink
+        });
+      });
+    }
+
+    // Create specifications object
+    const specifications = {};
+    if (apiData.product_specification && apiData.product_specification.length > 0) {
+      apiData.product_specification.forEach(spec => {
+        specifications[spec.PropertyName] = spec.PropertyValue;
+      });
+    }
+
+    // Calculate bulk pricing from API data
+    const bulkPricing = apiData.bulk_price && apiData.bulk_price.length > 0 
+      ? apiData.bulk_price.map(bulk => ({
+          from: bulk.min_qty || 0,
+          to: bulk.max_qty || 999,
+          price: parseFloat(bulk.price || 0)
+        }))
+      : [
+          { from: 20, to: 49, price: parseFloat(apiData.display_min_price) * 0.95 },
+          { from: 50, to: 99, price: parseFloat(apiData.display_min_price) * 0.90 }
+        ];
+
+    return {
+      id: apiData.product_id,
+      name: apiData.product_name,
+      media: media,
+      productImages: apiData.product_image ? apiData.product_image.map(img => img.ImageLink) : [],
+      rating: parseFloat(apiData.feedback_rating?.avg_rate || 0),
+      reviews: parseInt(apiData.feedback_rating?.total_feedback || 0),
+      orders: parseInt(apiData.saleCount || 0),
+      priceDetails: {
+        mrp: parseFloat(apiData.display_min_mrp || 0),
+        price: parseFloat(apiData.display_min_price || 0),
+        finalPrice: parseFloat(apiData.display_min_price_with_tax || apiData.display_min_price || 0),
+      },
+      bulkPricing: bulkPricing,
+      seller: apiData.business_detail?.CompanyName || 'Unknown Seller',
+      positiveSentiment: 95, // Default value since not in API
+      followers: 1200, // Default value since not in API
+      shippingInfo: {
+        Replacement: apiData.product?.product_return_period || '7 Days',
+        Processing: apiData.product?.ProcessingTimeInDays ? `${apiData.product.ProcessingTimeInDays} days` : '15 days',
+        Shipping: apiData.product?.shipping_template?.shipping_days ? `${apiData.product.shipping_template.shipping_days} days` : '4 days',
+        Seller: apiData.business_detail?.state_detail?.name || 'India',
+        Warranty: apiData.product?.HasWarranty === 'Yes' ? 'Available' : 'No',
+      },
+      stock: parseInt(apiData.stock || 0),
+      codAvailable: apiData.isCOD === 1,
+      specifications: specifications,
+      description: apiData.short_desc || '',
+      colors: apiData.product_color ? apiData.product_color.map(color => color.color) : ['Default'],
+      discount_percentage: parseInt(apiData.discount_percentage || 0),
+      relatedProducts: [] // This would need a separate API call for related products
+    };
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-lg">Loading product details...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-lg text-red-600">Error: {error}</div>
+        </div>
+      </Layout>
+    );
+  }
+
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-lg">Product not found</div>
+        </div>
+      </Layout>
+    );
   }
 
   const handleQuantityChange = (amount) => {
-    setQuantity((prev) => Math.max(1, Math.min(product.stock, prev + amount)));
+    setQuantity((prev) => Math.max(1, Math.min(product.stock || 999, prev + amount)));
   };
 
   const getSavePercentage = () => {
     const { mrp, finalPrice } = product.priceDetails;
-    return Math.round(((mrp - finalPrice) / mrp) * 100);
+    if (mrp && finalPrice) {
+      return Math.round(((mrp - finalPrice) / mrp) * 100);
+    }
+    return product.discount_percentage || 0;
   };
 
   return (
@@ -119,17 +184,21 @@ export default function ProductDetail() {
             {/* Left: Product Gallery */}
             <div className="w-full flex flex-col items-center">
               <div className="w-full max-w-sm md:max-w-md aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-4">
-                {selectedMedia.type === 'video' ? (
-                  <video src={selectedMedia.url} controls autoPlay muted loop className="w-full h-full object-contain" />
+                {selectedMedia ? (
+                  selectedMedia.type === 'video' ? (
+                    <video src={selectedMedia.url} controls autoPlay muted loop className="w-full h-full object-contain" />
+                  ) : (
+                    <img src={selectedMedia.url} alt={product.name} className="w-full h-full object-contain" />
+                  )
                 ) : (
-                  <img src={selectedMedia.url} alt={product.name} className="w-full h-full object-contain" />
+                  <div className="text-gray-400">No image available</div>
                 )}
               </div>
               <div className="flex gap-1 md:gap-2 justify-center">
                 {product.media.map((media, idx) => (
                   <button
                     key={idx}
-                    className={`border-2 rounded-lg w-12 h-12 md:w-16 md:h-16 flex items-center justify-center overflow-hidden ${selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
+                    className={`border-2 rounded-lg w-12 h-12 md:w-16 md:h-16 flex items-center justify-center overflow-hidden ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
                     onClick={() => setSelectedMedia(media)}
                   >
                     {media.type === 'video' ? (
@@ -147,7 +216,11 @@ export default function ProductDetail() {
               <h1 className="text-sm md:text-lg font-semibold text-gray-800 leading-snug">{product.name}</h1>
               
               <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
-                <span className="flex items-center">⭐⭐⭐⭐⭐</span>
+                <span className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className={i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}>⭐</span>
+                  ))}
+                </span>
                 <span>{product.rating} ({product.reviews} feedbacks)</span>
                 <span>{product.orders} orders</span>
               </div>
@@ -250,7 +323,7 @@ export default function ProductDetail() {
                     {/* Color */}
                     <span className="font-medium text-gray-500 text-xs md:text-sm">Color</span>
                     <div className="flex gap-2">
-                      {['White', 'Warm yellow', 'Yellow'].map((color) => (
+                      {product.colors.map((color) => (
                         <button key={color} className="px-1 md:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs">{color}</button>
                       ))}
                     </div>
@@ -324,6 +397,7 @@ export default function ProductDetail() {
 
           <ProductTabs
             product={product}
+            productDescription={productDescription}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             feedbackSubTab={feedbackSubTab}
@@ -332,8 +406,8 @@ export default function ProductDetail() {
 
           <RelatedProducts relatedProducts={product.relatedProducts} />
 
-  </div>
-  <ContactSellerModal open={showContactModal} onClose={() => setShowContactModal(false)} />
+        </div>
+        <ContactSellerModal open={showContactModal} onClose={() => setShowContactModal(false)} />
       </div>
     </Layout>
   );

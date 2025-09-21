@@ -1,6 +1,6 @@
 import FAQ from '../FAQ';
 
-export default function ProductTabs({ product, activeTab, setActiveTab, feedbackSubTab, setFeedbackSubTab }) {
+export default function ProductTabs({ product, productDescription, activeTab, setActiveTab, feedbackSubTab, setFeedbackSubTab }) {
   return (
     <div className="mt-6 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
       <div className="border-b border-gray-200">
@@ -54,12 +54,16 @@ export default function ProductTabs({ product, activeTab, setActiveTab, feedback
             </div>
             <div>
               <h3 className="text-base font-bold text-gray-800 mb-3">Description</h3>
-              <p
-                className="text-gray-600 leading-relaxed text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: product.description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'),
-                }}
-              />
+              {productDescription ? (
+                <div 
+                  className="text-gray-600 leading-relaxed text-sm"
+                  dangerouslySetInnerHTML={{ __html: productDescription }}
+                />
+              ) : (
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  {product.description}
+                </p>
+              )}
             </div>
             <div>
               <h3 className="text-base font-bold text-gray-800 mb-3">Product Images</h3>
