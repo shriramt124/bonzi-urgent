@@ -138,15 +138,15 @@ export default function ProductTabs({ product, productDescription, activeTab, se
                   
                   return (
                     <div key={star} className="flex items-center gap-3 text-sm">
-                      <span className="w-12 text-right font-medium">{star} stars</span>
-                      <span className="text-gray-500">:</span>
-                      <div className="flex-1 h-2 bg-gray-200 rounded-full mx-2 overflow-hidden">
+                      <span className="w-12 text-right font-medium text-black">{star} stars</span>
+                      <span className="text-black">:</span>
+                      <div className="w-32 h-2 bg-gray-200 rounded-full mx-2 overflow-hidden">
                         <div 
                           className="h-full bg-orange-400 rounded-full transition-all duration-300"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
-                      <span className="w-8 text-center font-medium">{count}</span>
+                      <span className="w-8 text-center font-medium text-black">{count}</span>
                     </div>
                   );
                 })}
