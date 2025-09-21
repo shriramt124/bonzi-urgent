@@ -42,25 +42,27 @@ export default function ProductTabs({ product, productDescription, activeTab, se
         {activeTab === 'details' && (
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-bold text-orange-500 mb-4">Specification</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <h3 className="text-lg font-bold text-orange-500 mb-6">Specification</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {product.productSpecifications && product.productSpecifications.map((spec, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="flex-shrink-0">
+                  <div key={index} className="flex flex-col items-center text-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                    <div className="mb-3">
                       <img 
                         src={spec.image} 
                         alt={spec.PropertyName}
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain mx-auto"
                         onError={(e) => {
-                          e.target.style.display = 'none';
+                          // Fallback to a default icon if image fails to load
+                          e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iNCIgZmlsbD0iIzNCODJGNiIvPgo8cGF0aCBkPSJNMjQgMTJMMzIgMjhIMTZMMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K';
+                          e.target.style.display = 'block';
                         }}
                       />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-blue-600 mb-1">
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-blue-600 mb-2">
                         {spec.PropertyName}
                       </div>
-                      <div className="text-sm text-gray-800 font-medium">
+                      <div className="text-sm text-gray-800 font-semibold">
                         {spec.PropertyValue}
                       </div>
                     </div>
