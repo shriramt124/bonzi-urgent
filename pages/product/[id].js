@@ -246,6 +246,7 @@ export default function ProductDetail() {
                       key={idx}
                       className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
                       onClick={() => setSelectedMedia(media)}
+                      aria-label={`View ${media.type === 'video' ? 'video' : 'image'} ${idx + 1} of ${product.media.length}`}
                     >
                       {media.type === 'video' ? (
                         <Image 
@@ -300,7 +301,10 @@ export default function ProductDetail() {
                     onMouseEnter={() => setShowBulkPrice(true)}
                     onMouseLeave={() => setShowBulkPrice(false)}
                   >
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center gap-1 sm:gap-2 transition-colors duration-200 text-xs sm:text-sm">
+                    <button 
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center gap-1 sm:gap-2 transition-colors duration-200 text-xs sm:text-sm"
+                      aria-label="View bulk pricing options"
+                    >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
@@ -364,22 +368,40 @@ export default function ProductDetail() {
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
                       <div className="flex gap-1 sm:gap-2 overflow-x-auto">
                         {product.colors.map((color) => (
-                          <button key={color} className="px-1 sm:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0">{color}</button>
+                          <button 
+                            key={color} 
+                            className="px-1 sm:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0"
+                            aria-label={`Select ${color} color`}
+                          >
+                            {color}
+                          </button>
                         ))}
                       </div>
 
                       {/* Quantity */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Quantity</span>
                       <div className="flex items-center">
-                        <button className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-l text-xs sm:text-sm" onClick={() => handleQuantityChange(-1)}>-</button>
+                        <button 
+                          className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-l text-xs sm:text-sm" 
+                          onClick={() => handleQuantityChange(-1)}
+                          aria-label="Decrease quantity"
+                        >
+                          -
+                        </button>
                         <span className="px-2 sm:px-3 py-0.5 border-t border-b text-xs sm:text-sm">{quantity}</span>
-                        <button className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-r text-xs sm:text-sm" onClick={() => handleQuantityChange(1)}>+</button>
+                        <button 
+                          className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-r text-xs sm:text-sm" 
+                          onClick={() => handleQuantityChange(1)}
+                          aria-label="Increase quantity"
+                        >
+                          +
+                        </button>
                         <span className="text-green-600 text-xs ml-1 sm:ml-2">(Stock {product.stock} pieces)</span>
                       </div>
 
                       {/* Empty cell for alignment */}
                       <span></span> 
-                      <div className="text-xs text-orange-600">Want to buy in bulk? <a href="#" className="underline font-semibold">Click here</a></div>
+                      <div className="text-xs text-orange-600">Want to buy in bulk? <a href="#" className="underline font-semibold">Learn about bulk pricing options</a></div>
 
                       {/* Shipping */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Shipping</span>
@@ -392,14 +414,32 @@ export default function ProductDetail() {
                       {/* Action */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Action</span>
                       <div className="flex flex-row gap-1 sm:gap-2 items-center">
-                        <button className="w-16 sm:w-20 md:w-24 bg-orange-500 text-white px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-600 text-xs">Buy Now</button>
-                        <button className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs">Add To Cart</button>
-                        <button className="text-orange-500 text-base sm:text-lg hover:text-orange-600">♡</button>
+                        <button 
+                          className="w-16 sm:w-20 md:w-24 bg-orange-500 text-white px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-600 text-xs"
+                          aria-label="Buy this product now"
+                        >
+                          Buy Now
+                        </button>
+                        <button 
+                          className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs"
+                          aria-label="Add this product to cart"
+                        >
+                          Add To Cart
+                        </button>
+                        <button 
+                          className="text-orange-500 text-base sm:text-lg hover:text-orange-600"
+                          aria-label="Add to wishlist"
+                        >
+                          ♡
+                        </button>
                       </div>
 
                       {/* Promotions */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Promotions</span>
-                      <button className="bg-gray-100 border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1 rounded-lg shadow-sm flex items-center gap-1 sm:gap-2 text-xs hover:bg-gray-200 w-fit">
+                      <button 
+                        className="bg-gray-100 border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1 rounded-lg shadow-sm flex items-center gap-1 sm:gap-2 text-xs hover:bg-gray-200 w-fit"
+                        aria-label="View available seller coupons"
+                      >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                         </svg>
@@ -418,10 +458,27 @@ export default function ProductDetail() {
                         <span>{product.followers} Followers</span>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-lg font-semibold shadow text-xs" onClick={() => setShowContactModal(true)}>Contact Seller</button>
+                        <button 
+                          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-lg font-semibold shadow text-xs"
+                          onClick={() => setShowContactModal(true)}
+                          aria-label="Contact the seller"
+                        >
+                          Contact Seller
+                        </button>
                         <div className="flex flex-col sm:flex-row gap-1">
-                          <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs">+ Follow</button>
-                          <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs" onClick={handleVisitStore}>Visit Store</button>
+                          <button 
+                            className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs"
+                            aria-label="Follow this seller"
+                          >
+                            + Follow
+                          </button>
+                          <button 
+                            className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs" 
+                            onClick={handleVisitStore}
+                            aria-label="Visit seller's store"
+                          >
+                            Visit Store
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -47,7 +47,10 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
                     onMouseEnter={() => setShowCategoriesDropdown(true)}
                     onMouseLeave={() => setShowCategoriesDropdown(false)}
                   >
-                    <button className="flex flex-col space-y-1 p-2 hover:bg-gray-100 rounded-md transition-colors">
+                    <button 
+                      className="flex flex-col space-y-1 p-2 hover:bg-gray-100 rounded-md transition-colors"
+                      aria-label="Open categories menu"
+                    >
                       <div className="w-6 h-0.5 bg-gray-600"></div>
                       <div className="w-6 h-0.5 bg-gray-600"></div>
                       <div className="w-6 h-0.5 bg-gray-600"></div>
@@ -95,25 +98,34 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
 
             {/* Right Icons and Language - Only on mobile first row */}
             <div className="flex items-center space-x-2 sm:hidden">
-              <div className="relative">
+              <button 
+                className="relative"
+                aria-label="View wishlist"
+              >
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-              </div>
+              </button>
 
-              <div className="relative">
+              <button 
+                className="relative"
+                aria-label="View shopping cart"
+              >
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
                 </svg>
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-              </div>
+              </button>
 
-              <div className="text-gray-600">
+              <button 
+                className="text-gray-600"
+                aria-label="User account menu"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -121,7 +133,11 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
           <div className="mt-3 sm:mt-0 sm:flex-1 sm:max-w-xl sm:mx-6">
             <div className="flex">
               <div className="relative group">
-                <select className="px-2 py-1.5 pr-7 border border-r-0 border-gray-300 bg-gray-50 text-gray-800 text-sm min-w-0 focus:outline-none focus:bg-white focus:border-orange-500 w-14 sm:w-20 appearance-none custom-select-orange">
+                <label htmlFor="category-select" className="sr-only">Select category</label>
+                <select 
+                  id="category-select"
+                  className="px-2 py-1.5 pr-7 border border-r-0 border-gray-300 bg-gray-50 text-gray-800 text-sm min-w-0 focus:outline-none focus:bg-white focus:border-orange-500 w-14 sm:w-20 appearance-none custom-select-orange"
+                >
                   <option value="">All</option>
                   {categories.map((category, index) => (
                     <option key={index} value={category.name}>
@@ -141,14 +157,19 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
                   }
                 `}</style>
               </div>
+              <label htmlFor="search-input" className="sr-only">Search for products</label>
               <input
+                id="search-input"
                 type="text"
                 placeholder="Search for products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 px-2 sm:px-3 py-1.5 border border-gray-300 focus:outline-none focus:border-orange-500 text-sm text-black"
               />
-              <button className="px-2.5 sm:px-4 py-1.5 bg-orange-500 text-white hover:bg-orange-600">
+              <button 
+                className="px-2.5 sm:px-4 py-1.5 bg-orange-500 text-white hover:bg-orange-600"
+                aria-label="Search"
+              >
                 <svg className="w-4 h-4 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -158,25 +179,32 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
 
           {/* Desktop: Right Icons */}
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <div className="relative">
+            <button 
+              className="relative"
+              aria-label="View wishlist"
+            >
               <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-            </div>
+            </button>
 
-            <div className="relative">
+            <button 
+              className="relative"
+              aria-label="View shopping cart"
+            >
               <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
               </svg>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-            </div>
+            </button>
 
             <div className="relative">
               <button
                 className="focus:outline-none"
                 onClick={() => setShowUserDropdown((v) => !v)}
                 tabIndex={0}
+                aria-label="User account menu"
               >
                 <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -244,7 +272,11 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
 
             {/* Language Dropdown - Desktop only */}
             <div className="hidden sm:block">
-              <select className="text-sm text-gray-600 bg-transparent border-none focus:outline-none">
+              <label htmlFor="language-select" className="sr-only">Select language</label>
+              <select 
+                id="language-select"
+                className="text-sm text-gray-600 bg-transparent border-none focus:outline-none"
+              >
                 <option>English</option>
                 <option>Hindi</option>
                 <option>Bengali</option>
