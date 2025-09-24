@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaYoutube, FaPinterest, FaCcVisa, FaCcAmex, FaCcMastercard, FaGooglePlay, FaAppStoreIos } from 'react-icons/fa';
 
@@ -52,33 +51,33 @@ export default function Footer() {
           {/* About Us Section */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">About Us</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">About Bonzi Cart</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Intellectual Property</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Terms & Conditions</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Privacy Policy</a></li>
+            <ul className="space-y-1.5 sm:space-y-3">
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">About Bonzi Cart</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Intellectual Property</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Privacy Policy</a></li>
             </ul>
           </div>
 
           {/* Seller Section */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">For Sellers</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Become a Seller</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Eligibility to Sell</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Seller Policy</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Contact Us</a></li>
+            <ul className="space-y-1.5 sm:space-y-3">
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Become a Seller</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Eligibility to Sell</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Seller Policy</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Contact Us</a></li>
             </ul>
           </div>
 
           {/* Buyer Section */}
           <div className="lg:col-span-1">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">For Buyers</h3>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Terms & Conditions</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Buyer Protection</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Buyer Policy</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-sm">Shipping & Returns</a></li>
+            <ul className="space-y-1.5 sm:space-y-3">
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Protection</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Policy</a></li>
+              <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Shipping & Returns</a></li>
             </ul>
           </div>
         </div>
