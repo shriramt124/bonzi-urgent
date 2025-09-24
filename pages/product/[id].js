@@ -107,6 +107,7 @@ export default function ProductDetail() {
 
     return {
       id: apiData.product_id,
+      store_id: apiData.store_id,
       name: apiData.product_name,
       media: media,
       productImages: apiData.product_image ? apiData.product_image.map(img => img.ImageLink) : [],
@@ -185,6 +186,12 @@ export default function ProductDetail() {
     setQuantity((prev) => Math.max(1, Math.min(product.stock || 999, prev + amount)));
   };
 
+  const handleVisitStore = () => {
+    if (product && product.store_id) {
+      window.open(`https://www.bonzicart.com/store?store=${product.store_id}`, '_blank');
+    }
+  };
+
   const getSavePercentage = () => {
     const { mrp, finalPrice } = product.priceDetails;
     if (mrp && finalPrice) {
@@ -207,14 +214,14 @@ export default function ProductDetail() {
       </Head>
 
       <Layout>
-        <div className="bg-gray-100 py-2 sm:py-4">
-          <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-8">
+        <div className="bg-gray-100 py-1 sm:py-2 md:py-4">
+          <div className="max-w-6xl mx-auto px-0.5 sm:px-2 md:px-4 lg:px-8">
             
             {/* Main Product Section */}
-            <div className="bg-white p-2 sm:p-4 rounded-lg shadow-sm flex flex-col md:flex-row gap-2 sm:gap-4">
+            <div className="bg-white p-0.5 sm:p-2 md:p-4 rounded-lg shadow-sm flex flex-col lg:flex-row gap-1 sm:gap-2 md:gap-4">
               {/* Left: Product Gallery */}
-              <div className="w-full flex flex-col items-center">
-                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-2 sm:mb-4">
+              <div className="w-full lg:w-1/2 flex flex-col items-center">
+                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-1 sm:mb-2 md:mb-4">
                   {selectedMedia ? (
                     selectedMedia.type === 'video' ? (
                       <video src={selectedMedia.url} controls autoPlay muted loop className="w-full h-full object-contain" />
@@ -233,11 +240,11 @@ export default function ProductDetail() {
                     <div className="text-gray-400 text-xs sm:text-sm">No image available</div>
                   )}
                 </div>
-                <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full">
+                <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full scrollbar-hide">
                   {product.media.map((media, idx) => (
                     <button
                       key={idx}
-                      className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
+                      className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
                       onClick={() => setSelectedMedia(media)}
                     >
                       {media.type === 'video' ? (
@@ -263,8 +270,8 @@ export default function ProductDetail() {
               </div>
 
               {/* Right: Product Info */}
-              <div className="w-full flex flex-col gap-2">
-                <h1 className="text-sm sm:text-lg font-semibold text-gray-800 leading-snug">{product.name}</h1>
+              <div className="w-full lg:w-1/2 flex flex-col gap-1 sm:gap-2">
+                <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight">{product.name}</h1>
                 
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
                   <span className="flex items-center">
@@ -349,7 +356,7 @@ export default function ProductDetail() {
                 </div>
 
                 {/* Two-column layout starts here */}
-                <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col xl:flex-row gap-2 sm:gap-4">
                   {/* Left Column */}
                   <div className="w-full">
                     <div className="grid grid-cols-[auto,1fr] items-center gap-x-2 sm:gap-x-4 gap-y-2 sm:gap-y-3 text-xs sm:text-sm">
@@ -402,19 +409,19 @@ export default function ProductDetail() {
                   </div>
 
                   {/* Right Column */}
-                  <div className="w-full max-w-sm mx-auto lg:mx-0 lg:w-56 flex flex-col gap-2">
-                    <div className="p-2 sm:p-3 bg-gray-50 rounded-lg flex flex-col gap-1 sm:gap-2" style={{ height: 'auto' }}>
+                  <div className="w-full xl:w-64 flex flex-col gap-1 sm:gap-2">
+                    <div className="p-1 sm:p-2 md:p-3 bg-gray-50 rounded-lg flex flex-col gap-1" style={{ height: 'auto' }}>
                       <div className="text-xs text-gray-600">Sold By</div>
-                      <div className="font-bold text-orange-600 text-sm md:text-xs">{product.seller}</div>
-                      <div className="flex flex-col text-xs text-gray-700 gap-1">
+                      <div className="font-bold text-orange-600 text-xs md:text-sm">{product.seller}</div>
+                      <div className="flex flex-col text-xs text-gray-700 gap-0.5">
                         <span>{product.positiveSentiment}% Positive Sentiment</span>
                         <span>{product.followers} Followers</span>
                       </div>
-                      <div className="flex flex-col gap-1 sm:gap-2">
-                        <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg font-semibold shadow text-xs sm:text-sm" onClick={() => setShowContactModal(true)}>Contact Seller</button>
-                        <div className="flex gap-1">
+                      <div className="flex flex-col gap-1">
+                        <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-lg font-semibold shadow text-xs" onClick={() => setShowContactModal(true)}>Contact Seller</button>
+                        <div className="flex flex-col sm:flex-row gap-1">
                           <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs">+ Follow</button>
-                          <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs">Visit Store</button>
+                          <button className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs" onClick={handleVisitStore}>Visit Store</button>
                         </div>
                       </div>
                     </div>

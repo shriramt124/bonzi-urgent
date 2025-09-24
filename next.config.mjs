@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
   // Allow Replit proxy domains
   allowedDevOrigins: [
     '*.replit.dev',

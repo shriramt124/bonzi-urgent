@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PostQuestionModal from './PostQuestionModal';
 
 const FAQItem = ({ question, answer, isOpen, onToggle }) => {
@@ -28,7 +28,38 @@ const FAQItem = ({ question, answer, isOpen, onToggle }) => {
 };
 
 const FAQ = ({ product }) => {
-  const [openItems, setOpenItems] = useState(new Set([0])); // First item open by default
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [openItems, setOpenItems] = useState(new Set());
+  const [showPostModal, setShowPostModal] = useState(false);
+
+  useEffect(() => {
+    if (product?.id) {
+      fetchFAQs();
+    }
+  }, [product?.id]);
+
+  const fetchFAQs = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`https://api.glst.in/api/v1/get-product-faq?product_id=${product.id}&limit=15&page=1`);
+      const data = await response.json();
+      if (data.success) {
+        setFaqs(data.data.data);
+        // Open first FAQ if available
+        if (data.data.data.length > 0) {
+          setOpenItems(new Set([0]));
+        }
+      } else {
+        setError('Failed to load FAQs');
+      }
+    } catch (err) {
+      setError('Error loading FAQs');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const toggleItem = (index) => {
     const newOpenItems = new Set(openItems);
@@ -40,63 +71,53 @@ const FAQ = ({ product }) => {
     setOpenItems(newOpenItems);
   };
 
-  const faqs = [
-    {
-      question: "What is the material and quality of this necklace?",
-      answer: "This necklace is crafted from high-quality alloy with elegant silver plating. The material is durable, resistant to tarnishing, and designed to maintain its shine over time. Each piece undergoes quality checks to ensure it meets our standards for both aesthetics and longevity."
-    },
-    {
-      question: "Is Cash on Delivery (COD) available for this product?",
-      answer: product.codAvailable
-        ? "Yes, Cash on Delivery is available for this product. You can pay in cash when your order is delivered to your doorstep. Please note that COD might have additional charges and availability depends on your location."
-        : "Currently, we only accept online payments for this product through secure payment gateways including credit/debit cards, UPI, net banking, and digital wallets. COD is not available for this item at the moment."
-    },
-    {
-      question: "What is the return and replacement policy?",
-      answer: "We offer a comprehensive 7-day replacement policy for this item. If you receive a damaged, defective, or incorrect product, you can request a replacement within 7 days of delivery. For returns due to change of mind, please ensure the product is unused and in its original packaging. All returns are subject to inspection before processing."
-    },
-    {
-      question: "How long does shipping take and what are the costs?",
-      answer: "Processing typically takes 15 days from the time of order confirmation. Shipping usually takes an additional 4 days depending on your location. Total delivery time is approximately 19-20 days. Shipping costs are calculated based on your location and order weight. Free shipping is available on orders above ₹499."
-    },
-    {
-      question: "Is this necklace suitable for sensitive skin or allergies?",
-      answer: "This necklace is made from hypoallergenic materials and is generally safe for most skin types. However, if you have known allergies to metals or nickel, we recommend testing a small area first or consulting with a healthcare professional. The plating is designed to minimize skin reactions."
-    },
-    {
-      question: "Does this necklace come with a warranty?",
-      answer: "This product comes with a comprehensive warranty covering manufacturing defects. The warranty period depends on the specific product category. For jewelry items, we provide a 6-month warranty against plating wear and manufacturing defects. Warranty claims can be initiated through our customer service."
-    },
-    {
-      question: "Can I customize the necklace or chain length?",
-      answer: "Currently, this necklace comes in standard sizes. The chain length is approximately 18 inches (45 cm) with a 2-inch extension for adjustability. If you need a different size or have specific customization requirements, please contact our customer service team for assistance with custom orders."
-    },
-    {
-      question: "How should I care for and maintain this jewelry?",
-      answer: "To maintain the beauty of your necklace: 1) Store in a jewelry box or pouch when not wearing, 2) Avoid contact with perfumes, lotions, and chemicals, 3) Clean gently with a soft cloth, 4) Remove before swimming or strenuous activities, 5) Have it professionally cleaned every 6 months. Proper care will ensure long-lasting shine and quality."
-    }
-  ];
-
-  const [showPostModal, setShowPostModal] = useState(false);
-
   const handlePostSubmit = (text) => {
     // TODO: replace with real API call - for now just log
     console.log('Posted question:', text);
   };
 
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+        </div>
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       {/* FAQ Items */}
       <div className="space-y-3">
-        {faqs.map((faq, index) => (
-          <FAQItem
-            key={index}
-            question={faq.question}
-            answer={faq.answer}
-            isOpen={openItems.has(index)}
-            onToggle={() => toggleItem(index)}
-          />
-        ))}
+        {faqs.length > 0 ? (
+          faqs.map((faq, index) => (
+            <FAQItem
+              key={index}
+              question={faq.faq_question}
+              answer={faq.faq_answer}
+              isOpen={openItems.has(index)}
+              onToggle={() => toggleItem(index)}
+            />
+          ))
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-gray-500">No FAQs available for this product.</p>
+          </div>
+        )}
       </div>
 
       {/* Contact Support */}

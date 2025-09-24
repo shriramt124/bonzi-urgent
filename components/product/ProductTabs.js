@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import FAQ from '../FAQ';
 
 export default function ProductTabs({ product, productDescription, activeTab, setActiveTab, feedbackSubTab, setFeedbackSubTab }) {
+  const [showSpecifications, setShowSpecifications] = useState(false);
+
   return (
-    <div className="mt-6 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
+    <div className="mt-6 bg-white p-1 sm:p-4 rounded-lg shadow-sm">
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-6" aria-label="Tabs">
           <button
@@ -42,32 +45,84 @@ export default function ProductTabs({ product, productDescription, activeTab, se
         {activeTab === 'details' && (
           <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-bold text-orange-500 mb-6">Specification</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {product.productSpecifications && product.productSpecifications.map((spec, index) => (
-                  <div key={index} className="flex flex-col items-center text-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                    <div className="mb-3">
-                      <img 
-                        src={spec.image} 
-                        alt={spec.PropertyName}
-                        className="w-12 h-12 object-contain mx-auto"
-                        onError={(e) => {
-                          // Fallback to a default icon if image fails to load
-                          e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iNCIgZmlsbD0iIzNCODJGNiIvPgo8cGF0aCBkPSJNMjQgMTJMMzIgMjhIMTZMMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K';
-                          e.target.style.display = 'block';
-                        }}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-blue-600 mb-2">
-                        {spec.PropertyName}
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-bold text-orange-500">Specification</h3>
+                <button
+                  onClick={() => setShowSpecifications(!showSpecifications)}
+                  className="sm:hidden flex items-center gap-2 text-orange-600 font-medium text-sm"
+                >
+                  <span>{showSpecifications ? 'Hide' : 'Show'} Specifications</span>
+                  <svg
+                    className={`w-4 h-4 transform transition-transform ${showSpecifications ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Desktop: Always show specifications */}
+              <div className="hidden sm:block">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {product.productSpecifications && product.productSpecifications.map((spec, index) => (
+                    <div key={index} className="flex flex-col items-center text-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                      <div className="mb-3">
+                        <img 
+                          src={spec.image} 
+                          alt={spec.PropertyName}
+                          className="w-8 h-8 object-contain mx-auto"
+                          onError={(e) => {
+                            // Fallback to a default icon if image fails to load
+                            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzNCODJGNiIvPgo8cGF0aCBkPSJNMjQgMTJMMzIgMjhIMTZMMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K';
+                            e.target.style.display = 'block';
+                          }}
+                        />
                       </div>
-                      <div className="text-sm text-gray-800 font-semibold">
-                        {spec.PropertyValue}
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-blue-600 mb-2">
+                          {spec.PropertyName}
+                        </div>
+                        <div className="text-sm text-gray-800 font-semibold">
+                          {spec.PropertyValue}
+                        </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Mobile: Collapsible specifications */}
+              <div className="sm:hidden">
+                <div className={`overflow-hidden transition-all duration-300 ${showSpecifications ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className="grid grid-cols-1 gap-4 pt-4 max-h-80 overflow-y-auto">
+                    {product.productSpecifications && product.productSpecifications.map((spec, index) => (
+                      <div key={index} className="flex items-center p-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                        <div className="mr-3 flex-shrink-0">
+                          <img 
+                            src={spec.image} 
+                            alt={spec.PropertyName}
+                            className="w-6 h-6 object-contain"
+                            onError={(e) => {
+                              // Fallback to a default icon if image fails to load
+                              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzNCODJGNiIvPgo8cGF0aCBkPSJNMjQgMTJMMzIgMjhIMTZMMjQgMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K';
+                              e.target.style.display = 'block';
+                            }}
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-blue-600 mb-1">
+                            {spec.PropertyName}
+                          </div>
+                          <div className="text-sm text-gray-800 font-semibold">
+                            {spec.PropertyValue}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             </div>
             <div>
