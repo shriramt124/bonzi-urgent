@@ -8,6 +8,11 @@ const nextConfig = {
     'localhost',
     '127.0.0.1'
   ],
+  images: {
+    domains: [
+      'admin.glst.in'
+    ],
+  },
   async headers() {
     return [
       {
