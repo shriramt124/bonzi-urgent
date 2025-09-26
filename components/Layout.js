@@ -27,7 +27,7 @@ export default function Layout({ children }) {
           scrolled={scrolled}
         />
         
-        <div className="flex mt-4 pt-28">
+        <div className="flex">
           <Sidebar isOpen={sidebarOpen} />
           <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all duration-300`}>
             {children}
