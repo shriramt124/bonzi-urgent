@@ -28,6 +28,8 @@ export default function ProductDetail() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFollowLoading, setIsFollowLoading] = useState(false);
+  const [priceData, setPriceData] = useState(null);
+  const [priceLoading, setPriceLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -64,11 +66,34 @@ export default function ProductDetail() {
         setSelectedMedia(transformedProduct.media[0]);
       }
 
+      // Fetch initial price data with quantity 1
+      await fetchPriceData(1);
+
     } catch (err) {
       setError(err.message);
       console.error('Error fetching product data:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchPriceData = async (qty = quantity) => {
+    if (!id) return;
+    
+    try {
+      setPriceLoading(true);
+      const response = await fetch(`https://api.glst.in/api/v2/get-product-price?product_id=${id}&quantity=${qty}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setPriceData(data.data);
+      } else {
+        console.error('Price API Error:', data.message);
+      }
+    } catch (error) {
+      console.error('Price fetch error:', error);
+    } finally {
+      setPriceLoading(false);
     }
   };
 
@@ -185,7 +210,9 @@ export default function ProductDetail() {
   }
 
   const handleQuantityChange = (amount) => {
-    setQuantity((prev) => Math.max(1, Math.min(product.stock || 999, prev + amount)));
+    const newQuantity = Math.max(1, Math.min(product.stock || 999, quantity + amount));
+    setQuantity(newQuantity);
+    fetchPriceData(newQuantity);
   };
 
   const handleVisitStore = () => {
@@ -322,14 +349,42 @@ export default function ProductDetail() {
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
                   <div className="bg-gray-50 p-2 rounded-md flex-1">
-                    <div className="flex items-center gap-2">
+                    {priceLoading ? (
+                      <div className="flex items-center justify-center h-16">
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500"></div>
+                      </div>
+                    ) : priceData ? (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="flex flex-col">
+                            <span className="line-through text-gray-500 text-xs sm:text-sm">₹{priceData.mrp}</span>
+                            <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
+                          </div>
+                          <div className="text-base sm:text-lg md:text-xl font-bold text-orange-600">₹{parseFloat(priceData.sale_price.replace('INR ', ''))}</div>
+                        </div>
+                        <div className="text-sm sm:text-base font-bold text-red-600">₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} <span className="text-xs sm:text-sm font-normal text-gray-600">/ Piece (incl. tax)</span></div>
+                        <div className="text-xs text-gray-600 mt-1">
+                          <span>Tax: ₹{priceData.tax_amount}</span>
+                          {priceData.shipping_amount > 0 && <span className="ml-2">Shipping: ₹{priceData.shipping_amount}</span>}
+                        </div>
+                        <div className="text-xs text-green-600 font-semibold mt-1">
+                          Total Savings: ₹{priceData.saved_amount}
+                        </div>
+                        {priceData.stock < 10 && (
+                          <div className="text-xs text-red-600 mt-1 font-semibold">
+                            Only {priceData.stock} left in stock!
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
                         <div className="flex flex-col">
-                            <span className="line-through text-gray-500 text-xs sm:text-sm">₹{product.priceDetails.mrp.toFixed(2)}</span>
-                            <span className="text-green-600 font-semibold text-xs">Save {getSavePercentage()}%</span>
+                          <span className="line-through text-gray-500 text-xs sm:text-sm">₹{product.priceDetails.mrp.toFixed(2)}</span>
+                          <span className="text-green-600 font-semibold text-xs">Save {getSavePercentage()}%</span>
                         </div>
                         <div className="text-base sm:text-lg md:text-xl font-bold text-orange-600">₹{product.priceDetails.price.toFixed(2)}</div>
-                    </div>
-                    <div className="text-sm sm:text-base font-bold text-red-600">₹{product.priceDetails.finalPrice.toFixed(2)} <span className="text-xs sm:text-sm font-normal text-gray-600">/ Piece</span></div>
+                      </div>
+                    )}
                   </div>
 
                   <div 
@@ -359,11 +414,11 @@ export default function ProductDetail() {
                                   </tr>
                               </thead>
                               <tbody>
-                                  {product.bulkPricing.map((tier, index) => (
+                                  {(priceData?.bulk_price || product.bulkPricing).map((tier, index) => (
                                       <tr key={index} className="border-b">
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.from}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.to}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">₹ {tier.price}</td>
+                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_from || tier.from}</td>
+                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_to || tier.to}</td>
+                                          <td className="p-1 sm:p-2 text-black text-xs">₹ {tier.bulk_price_amount || tier.price}</td>
                                       </tr>
                                   ))}
                               </tbody>
@@ -432,7 +487,7 @@ export default function ProductDetail() {
                         >
                           +
                         </button>
-                        <span className="text-green-600 text-xs ml-1 sm:ml-2">(Stock {product.stock} pieces)</span>
+                        <span className="text-green-600 text-xs ml-1 sm:ml-2">(Stock {priceData?.stock || product.stock} pieces)</span>
                       </div>
 
                       {/* Empty cell for alignment */}
