@@ -66,7 +66,9 @@ export default function ProductTabs({ product, productDescription, activeTab, se
               {/* Desktop: Always show specifications */}
               <div className="hidden sm:block">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {product.productSpecifications && product.productSpecifications.map((spec, index) => (
+                  {product.productSpecifications && product.productSpecifications
+                    .filter(spec => spec.PropertyValue && spec.PropertyValue.trim() !== '' && spec.PropertyValue !== 'null' && spec.PropertyValue !== 'undefined')
+                    .map((spec, index) => (
                     <div key={index} className="flex flex-col items-center text-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                       <div className="mb-3">
                         <img 
@@ -97,7 +99,9 @@ export default function ProductTabs({ product, productDescription, activeTab, se
               <div className="sm:hidden">
                 <div className={`overflow-hidden transition-all duration-300 ${showSpecifications ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                   <div className="grid grid-cols-1 gap-4 pt-4 max-h-80 overflow-y-auto">
-                    {product.productSpecifications && product.productSpecifications.map((spec, index) => (
+                    {product.productSpecifications && product.productSpecifications
+                      .filter(spec => spec.PropertyValue && spec.PropertyValue.trim() !== '' && spec.PropertyValue !== 'null' && spec.PropertyValue !== 'undefined')
+                      .map((spec, index) => (
                       <div key={index} className="flex items-center p-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                         <div className="mr-3 flex-shrink-0">
                           <img 

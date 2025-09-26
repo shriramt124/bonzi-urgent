@@ -455,19 +455,23 @@ export default function ProductDetail() {
                   {/* Left Column */}
                   <div className="w-full">
                     <div className="grid grid-cols-[auto,1fr] items-center gap-x-2 sm:gap-x-4 gap-y-2 sm:gap-y-3 text-xs sm:text-sm">
-                      {/* Color */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
-                      <div className="flex gap-1 sm:gap-2 overflow-x-auto">
-                        {product.colors.map((color) => (
-                          <button 
-                            key={color} 
-                            className="px-1 sm:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0"
-                            aria-label={`Select ${color} color`}
-                          >
-                            {color}
-                          </button>
-                        ))}
-                      </div>
+                      {/* Color - Only show if colors exist and are not just 'Default' */}
+                      {product.colors && product.colors.length > 0 && product.colors[0] !== 'Default' && (
+                        <>
+                          <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
+                          <div className="flex gap-1 sm:gap-2 overflow-x-auto">
+                            {product.colors.map((color) => (
+                              <button 
+                                key={color} 
+                                className="px-1 sm:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0"
+                                aria-label={`Select ${color} color`}
+                              >
+                                {color}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
 
                       {/* Quantity */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Quantity</span>
