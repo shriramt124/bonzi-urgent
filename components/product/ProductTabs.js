@@ -142,19 +142,6 @@ export default function ProductTabs({ product, productDescription, activeTab, se
                 </p>
               )}
             </div>
-            <div>
-              <h3 className="text-base font-bold text-gray-800 mb-3">Product Images</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {product.productImages.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt={`Product image ${index + 1}`}
-                    className="rounded-lg w-full object-cover"
-                  />
-                ))}
-              </div>
-            </div>
           </div>
         )}
         {activeTab === 'feedback' && (

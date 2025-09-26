@@ -212,7 +212,6 @@ export default function ProductDetail() {
   const handleQuantityChange = (amount) => {
     const newQuantity = Math.max(1, Math.min(product.stock || 999, quantity + amount));
     setQuantity(newQuantity);
-    fetchPriceData(newQuantity);
   };
 
   const handleVisitStore = () => {
@@ -303,48 +302,45 @@ export default function ProductDetail() {
                     <div className="text-gray-400 text-xs sm:text-sm">No image available</div>
                   )}
                 </div>
-                <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full scrollbar-hide">
-                  {product.media.map((media, idx) => (
-                    <button
-                      key={idx}
-                      className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
-                      onClick={() => setSelectedMedia(media)}
-                      aria-label={`View ${media.type === 'video' ? 'video' : 'image'} ${idx + 1} of ${product.media.length}`}
-                    >
-                      {media.type === 'video' ? (
-                        <Image 
-                          src={media.thumbnail} 
-                          alt="Video thumbnail" 
-                          width={64}
-                          height={64}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <Image 
-                          src={media.url} 
-                          alt="Thumbnail" 
-                          width={64}
-                          height={64}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {/* Right: Product Info */}
               <div className="w-full lg:w-1/2 flex flex-col gap-1 sm:gap-2">
-                <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight">{product.name}</h1>
+                <div className="flex items-center justify-between">
+                  <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight">{product.name}</h1>
+                  <button
+                    className="ml-2 p-1 rounded hover:bg-gray-100 text-orange-500 border border-gray-200"
+                    aria-label="Share product"
+                    onClick={() => {
+                      if (navigator.share) {
+                        navigator.share({
+                          title: product.name,
+                          text: product.description,
+                          url: window.location.href
+                        });
+                      } else {
+                        alert('Sharing is not supported on this browser.');
+                      }
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <circle cx="18" cy="5" r="2" fill="currentColor" />
+                      <circle cx="6" cy="12" r="2" fill="currentColor" />
+                      <circle cx="18" cy="19" r="2" fill="currentColor" />
+                      <line x1="8" y1="12" x2="16" y2="6" stroke="currentColor" strokeWidth="2" />
+                      <line x1="8" y1="12" x2="16" y2="19" stroke="currentColor" strokeWidth="2" />
+                    </svg>
+                  </button>
+                </div>
                 
                 <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
                   <span className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className={`text-xs sm:text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>⭐</span>
+                      <span key={i} className={`text-[10px] sm:text-xs ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>⭐</span>
                     ))}
                   </span>
-                  <span className="text-xs sm:text-sm">{product.rating} ({product.reviews} feedbacks)</span>
-                  <span className="text-xs sm:text-sm">{product.orders} orders</span>
+                  <span className="text-[10px] sm:text-xs">{product.rating} ({product.reviews} feedbacks)</span>
+                  <span className="text-[10px] sm:text-xs">{product.orders} orders</span>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
@@ -356,19 +352,16 @@ export default function ProductDetail() {
                     ) : priceData ? (
                       <div>
                         <div className="flex items-center gap-2 mb-2">
-                          <div className="flex flex-col">
-                            <span className="line-through text-gray-500 text-xs sm:text-sm">₹{priceData.mrp}</span>
-                            <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
-                          </div>
-                          <div className="text-base sm:text-lg md:text-xl font-bold text-orange-600">₹{parseFloat(priceData.sale_price.replace('INR ', ''))}</div>
+                          <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{priceData.mrp}</span>
+                          <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
                         </div>
-                        <div className="text-sm sm:text-base font-bold text-red-600">₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} <span className="text-xs sm:text-sm font-normal text-gray-600">/ Piece (incl. tax)</span></div>
-                        <div className="text-xs text-gray-600 mt-1">
-                          <span>Tax: ₹{priceData.tax_amount}</span>
-                          {priceData.shipping_amount > 0 && <span className="ml-2">Shipping: ₹{priceData.shipping_amount}</span>}
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{parseFloat(priceData.sale_price.replace('INR ', ''))}</span>
+                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
                         </div>
-                        <div className="text-xs text-green-600 font-semibold mt-1">
-                          Total Savings: ₹{priceData.saved_amount}
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm sm:text-base font-bold text-red-600">₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} / Piece</span>
+                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                         {priceData.stock < 10 && (
                           <div className="text-xs text-red-600 mt-1 font-semibold">
@@ -377,12 +370,19 @@ export default function ProductDetail() {
                         )}
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2">
-                        <div className="flex flex-col">
-                          <span className="line-through text-gray-500 text-xs sm:text-sm">₹{product.priceDetails.mrp.toFixed(2)}</span>
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{product.priceDetails.mrp.toFixed(2)}</span>
                           <span className="text-green-600 font-semibold text-xs">Save {getSavePercentage()}%</span>
                         </div>
-                        <div className="text-base sm:text-lg md:text-xl font-bold text-orange-600">₹{product.priceDetails.price.toFixed(2)}</div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{product.priceDetails.price.toFixed(2)}</span>
+                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
+                        </div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm sm:text-base font-bold text-red-600">₹{product.priceDetails.finalPrice.toFixed(2)} / Piece</span>
+                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -511,13 +511,18 @@ export default function ProductDetail() {
                       <div className="flex flex-col">
                         {priceData ? (
                           <div className="flex flex-col">
-                            <span className="text-green-600 font-bold text-xs sm:text-sm">
-                              ₹{parseFloat(priceData.total_sale_price_with_tax.replace('INR ', ''))} 
-                              <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              Qty: {quantity} × ₹{parseFloat(priceData.sale_price.replace('INR ', ''))}
-                            </span>
+                            {(() => {
+                              const unitPriceWithTax = parseFloat(priceData.sale_price_with_tax.replace('INR ', ''));
+                              const totalPrice = (quantity * unitPriceWithTax).toFixed(2);
+                              return (
+                                <>
+                                  <span className="text-green-600 font-bold text-xs sm:text-sm">
+                                    ₹{totalPrice} 
+                                    <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
+                                  </span>
+                                </>
+                              );
+                            })()}
                           </div>
                         ) : (
                           <span className="text-green-600 font-bold text-xs sm:text-sm">

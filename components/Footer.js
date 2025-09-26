@@ -5,8 +5,8 @@ export default function Footer() {
   return (
     <footer className="w-full">
       {/* Main Footer Content */}
-      <div className="w-full px-1 sm:px-4 lg:px-8 py-6 sm:py-12 bg-white border-t border-gray-200 mt-8 sm:mt-16">
-        <div className="w-full sm:max-w-7xl sm:mx-auto">
+      <div className="w-full py-6 sm:py-12 bg-white border-t border-gray-200 mt-8 sm:mt-16">
+        <div className="w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-12">
             {/* App Download Section */}
             <div className="sm:col-span-1">
@@ -53,10 +53,10 @@ export default function Footer() {
             <div className="sm:col-span-1">
               <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">About Us</h3>
               <ul className="space-y-1 sm:space-y-1.5">
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">About Bonzi Cart</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Intellectual Property</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Privacy Policy</a></li>
+                <li><a href="https://www.bonzicart.com/about_us/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">About Bonzi Cart</a></li>
+                <li><a href="https://www.bonzicart.com/Intellectual_property_claims/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Intellectual Property</a></li>
+                <li><a href="https://www.bonzicart.com/terms_and_condition/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
+                <li><a href="https://www.bonzicart.com/privacy_policy/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Privacy Policy</a></li>
               </ul>
             </div>
 
@@ -64,10 +64,10 @@ export default function Footer() {
             <div className="sm:col-span-1">
               <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">For Sellers</h3>
               <ul className="space-y-1 sm:space-y-1.5">
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Become a Seller</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Eligibility to Sell</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Seller Policy</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Contact Us</a></li>
+                <li><a href="https://www.bonzicart.com/seller/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Become a Seller</a></li>
+                <li><a href="https://www.bonzicart.com/seller/eligibility_to_sell/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Eligibility to Sell</a></li>
+                <li><a href="https://www.bonzicart.com/seller/seller_policy/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Seller Policy</a></li>
+                <li><a href="https://www.bonzicart.com/contact-us" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Contact Us</a></li>
               </ul>
             </div>
 
@@ -75,10 +75,10 @@ export default function Footer() {
             <div className="sm:col-span-1">
               <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">For Buyers</h3>
               <ul className="space-y-1 sm:space-y-1.5">
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Protection</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Policy</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Shipping & Returns</a></li>
+                <li><a href="https://www.bonzicart.com/buyer/terms_and_conditions/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Terms & Conditions</a></li>
+                <li><a href="https://www.bonzicart.com/buyer/protection/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Protection</a></li>
+                <li><a href="https://www.bonzicart.com/buyer/policy/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Buyer Policy</a></li>
+                <li><a href="https://www.bonzicart.com/buyer/return_policy/" className="text-gray-600 hover:text-orange-500 transition-colors duration-200 text-xs sm:text-sm">Shipping & Returns</a></li>
               </ul>
             </div>
           </div>
@@ -86,34 +86,11 @@ export default function Footer() {
       </div>
 
       {/* Payment Methods Section */}
-      <div className="w-full bg-gray-50 border-t border-gray-200 px-1 sm:px-4 lg:px-8 py-4 sm:py-8">
-        <div className="w-full sm:max-w-7xl sm:mx-auto">
-          <div className="text-center">
-            {/* <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-6">Accepted Payment Methods</h3> */}
-            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6">
-              <FaCcVisa className="h-6 w-6 sm:h-10 sm:w-10 text-orange-500 hover:text-orange-600 transition-colors duration-200" />
-              <FaCcAmex className="h-6 w-6 sm:h-10 sm:w-10 text-orange-500 hover:text-orange-600 transition-colors duration-200" />
-              <FaCcMastercard className="h-6 w-6 sm:h-10 sm:w-10 text-orange-500 hover:text-orange-600 transition-colors duration-200" />
-              <div className="flex items-center space-x-1 sm:space-x-2">
-                <span className="text-orange-500 font-medium text-xs sm:text-sm">Bank Transfer</span>
-              </div>
-              <div className="flex items-center space-x-1 sm:space-x-2">
-                <span className="text-orange-500 font-medium text-xs sm:text-sm">Paytm</span>
-              </div>
-              <div className="flex items-center space-x-1 sm:space-x-2">
-                <span className="text-orange-500 font-medium text-xs sm:text-sm">UPI</span>
-              </div>
-              <div className="flex items-center space-x-1 sm:space-x-2">
-                <span className="text-orange-500 font-medium text-xs sm:text-sm">Maestro</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Copyright Section */}
-      <div className="w-full bg-gray-900 text-white px-1 sm:px-4 lg:px-8 py-3 sm:py-6">
-        <div className="w-full sm:max-w-7xl sm:mx-auto">
+      <div className="w-full bg-gray-900 text-white py-3 px-4 sm:py-6">
+        <div className="w-full">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
               <div className="flex items-center space-x-2 sm:space-x-4">
                 <img src="/BonziLogo.png" alt="BonziCart Logo" className="h-6 w-6 sm:h-8 sm:w-auto" />
