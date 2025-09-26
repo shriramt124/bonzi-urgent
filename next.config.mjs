@@ -2,10 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
-  // Allow Replit proxy domains
+  // Configure allowed origins for Replit proxy
   allowedDevOrigins: [
     '*.replit.dev',
     '*.repl.co',
+    '*.sisko.replit.dev',
     'localhost',
     '127.0.0.1'
   ],
