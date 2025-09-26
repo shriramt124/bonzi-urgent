@@ -99,19 +99,19 @@ export default function Footer() {
               <div className="flex items-center space-x-3 sm:space-x-6">
                 <span className="text-xs sm:text-sm text-gray-400">Follow Us</span>
                 <div className="flex space-x-2 sm:space-x-4">
-                  <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
+                  <a href="https://www.facebook.com/BonziCart4U#" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
                     <FaFacebookF className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
-                  <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
+                  <a href="https://www.instagram.com/bonzicart/" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
                     <FaInstagram className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
-                  <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
+                  <a href="https://x.com/BonziCart" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
                     <FaTwitter className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
-                  <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
+                  <a href="https://www.linkedin.com/in/bonzi-cart-510646204/" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
                     <FaLinkedinIn className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
-                  <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
+                  <a href="https://www.youtube.com/channel/UCOgOz_X-Vk-OWvNS9Dy4KoQ?guided_help_flow=5" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
                     <FaYoutube className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
                   <a href="#" className="text-orange-400 hover:text-orange-300 transition-colors duration-200">
