@@ -82,7 +82,7 @@ export default function ProductDetail() {
     
     try {
       setPriceLoading(true);
-      const response = await fetch(`https://api.glst.in/api/v2/get-product-price?product_id=${id}&quantity=${qty}`);
+      const response = await fetch(`https://api.glst.in/api/v2/get-product-price?product_id=${id}&product_qty=${qty}`);
       const data = await response.json();
       
       if (data.success) {
