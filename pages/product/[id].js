@@ -26,6 +26,8 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [showBulkPrice, setShowBulkPrice] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowLoading, setIsFollowLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -189,6 +191,40 @@ export default function ProductDetail() {
   const handleVisitStore = () => {
     if (product && product.store_id) {
       window.open(`https://www.bonzicart.com/store?store=${product.store_id}`, '_blank');
+    }
+  };
+
+  const handleFollowToggle = async () => {
+    if (!product || !product.store_id) return;
+    
+    setIsFollowLoading(true);
+    try {
+      const response = await fetch('https://api.glst.in/api/v1/store/follow-unfollow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          store_id: product.store_id,
+          status: !isFollowing // Toggle the current status
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setIsFollowing(!isFollowing);
+        // Optional: Show success message
+        console.log(data.message || 'Follow status updated successfully');
+      } else {
+        console.error('API Error:', data.message);
+        // Optional: Show error message to user
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      // Optional: Show error message to user
+    } finally {
+      setIsFollowLoading(false);
     }
   };
 
@@ -467,10 +503,26 @@ export default function ProductDetail() {
                         </button>
                         <div className="flex flex-col sm:flex-row gap-1">
                           <button 
-                            className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs"
-                            aria-label="Follow this seller"
+                            className={`flex-1 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs transition-colors ${
+                              isFollowing 
+                                ? 'bg-red-500 text-white border border-red-500 hover:bg-red-600' 
+                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            } ${isFollowLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            onClick={handleFollowToggle}
+                            disabled={isFollowLoading}
+                            aria-label={isFollowing ? "Unfollow this seller" : "Follow this seller"}
                           >
-                            + Follow
+                            {isFollowLoading ? (
+                              <span className="flex items-center justify-center">
+                                <svg className="animate-spin -ml-1 mr-1 h-3 w-3 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                ...
+                              </span>
+                            ) : (
+                              isFollowing ? 'Unfollow' : '+ Follow'
+                            )}
                           </button>
                           <button 
                             className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs" 
