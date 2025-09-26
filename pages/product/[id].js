@@ -302,14 +302,42 @@ export default function ProductDetail() {
                     <div className="text-gray-400 text-xs sm:text-sm">No image available</div>
                   )}
                 </div>
+                <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full scrollbar-hide">
+                  {product.media.map((media, idx) => (
+                    <button
+                      key={idx}
+                      className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
+                      onClick={() => setSelectedMedia(media)}
+                      aria-label={`View ${media.type === 'video' ? 'video' : 'image'} ${idx + 1} of ${product.media.length}`}
+                    >
+                      {media.type === 'video' ? (
+                        <Image 
+                          src={media.thumbnail} 
+                          alt="Video thumbnail" 
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Image 
+                          src={media.url} 
+                          alt="Thumbnail" 
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Right: Product Info */}
               <div className="w-full lg:w-1/2 flex flex-col gap-1 sm:gap-2">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight">{product.name}</h1>
+                <div className="flex items-start justify-between">
+                  <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight flex-1 pr-2">{product.name}</h1>
                   <button
-                    className="ml-2 p-1 rounded hover:bg-gray-100 text-orange-500 border border-gray-200"
+                    className="p-1 rounded hover:bg-gray-100 text-orange-500 border border-gray-200 flex-shrink-0"
                     aria-label="Share product"
                     onClick={() => {
                       if (navigator.share) {
