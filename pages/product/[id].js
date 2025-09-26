@@ -502,6 +502,27 @@ export default function ProductDetail() {
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">COD</span>
                       <span className="text-gray-500 font-semibold text-xs sm:text-sm">{product.codAvailable ? 'Available' : 'Not Available'}</span>
 
+                      {/* Total Price */}
+                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Total Price</span>
+                      <div className="flex flex-col">
+                        {priceData ? (
+                          <div className="flex flex-col">
+                            <span className="text-green-600 font-bold text-xs sm:text-sm">
+                              ₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} 
+                              <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              Qty: {quantity} × ₹{parseFloat(priceData.sale_price.replace('INR ', ''))}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-green-600 font-bold text-xs sm:text-sm">
+                            ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
+                            <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
+                          </span>
+                        )}
+                      </div>
+
                       {/* Action */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Action</span>
                       <div className="flex flex-row gap-1 sm:gap-2 items-center">
