@@ -512,7 +512,7 @@ export default function ProductDetail() {
                         {priceData ? (
                           <div className="flex flex-col">
                             <span className="text-green-600 font-bold text-xs sm:text-sm">
-                              ₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} 
+                              ₹{parseFloat(priceData.total_sale_price_with_tax.replace('INR ', ''))} 
                               <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
                             </span>
                             <span className="text-xs text-gray-500">
