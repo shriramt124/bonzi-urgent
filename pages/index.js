@@ -295,7 +295,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="pt-16 sm:pt-20 md:pt-24">
+      <div className="pt-20 sm:pt-24 md:pt-28">
         {/* Mobile: Stack layout, Tablet/Desktop: Side-by-side layout */}
         <div className="block lg:flex lg:gap-2 lg:items-stretch">
           {/* Categories Section - Desktop: Sidebar only */}

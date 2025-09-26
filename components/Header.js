@@ -58,8 +58,8 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
 
                     {/* Categories Dropdown */}
                     {showCategoriesDropdown && (
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                        <div className="p-3">
+                      <div className="absolute top-full left-0 sm:left-1/2 sm:transform sm:-translate-x-1/2 -mt-1 w-64 sm:w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50 max-w-[calc(100vw-2rem)]">
+                        <div className="p-3 max-h-80 overflow-y-auto">
                           <h3 className="text-sm font-semibold text-gray-800 mb-2 flex items-center">
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
@@ -75,7 +75,7 @@ export default function Header({ sidebarOpen, setSidebarOpen, scrolled }) {
                                 className="flex items-center py-1.5 px-2 text-gray-600 hover:bg-gray-100 hover:text-orange-500 rounded-md transition-colors text-xs"
                               >
                                 <span className="mr-2 text-base">{category.icon}</span>
-                                <span className="text-xs">{category.name}</span>
+                                <span className="text-xs truncate">{category.name}</span>
                               </a>
                             ))}
                           </div>
