@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import toast from 'react-hot-toast';
 import Layout from '../../components/Layout';
 import ContactSellerModal from '../../components/ContactSellerModal';
 import ProductTabs from '../../components/product/ProductTabs';
+import { useCart } from '../../contexts/CartContext';
 
 // Dynamic imports for better performance
 const RelatedProducts = dynamic(() => import('../../components/product/RelatedProducts'), {
@@ -30,6 +32,16 @@ export default function ProductDetail() {
   const [isFollowLoading, setIsFollowLoading] = useState(false);
   const [priceData, setPriceData] = useState(null);
   const [priceLoading, setPriceLoading] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const { addToCart, cartLoading } = useCart();
+
+  // Store access token in localStorage
+  useEffect(() => {
+    const accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5MjBjMTIwZS0zY2IwLTQ3OGMtOTY0Yi1hM2ZhZmFjMDFhNGIiLCJqdGkiOiI1MTYwYzgzMTI1NjRiODEzYWQ0MDZmN2UzZDIxYzc1NGI4YWFiNjM5Y2ZmN2MxOGRhN2UwNTc3NDJjZGMyZWZmMWEyY2U4OWU2N2MxYzBjMiIsImlhdCI6MTc1ODk4MDkxNi4wNDcyODUsIm5iZiI6MTc1ODk4MDkxNi4wNDcyOSwiZXhwIjoxNzkwNTE2OTE2LjAwNjgwMiwic3ViIjoiNSIsInNjb3BlcyI6WyIqIl19.jVO8NQ6MG24sbDGcsFoC7-sNocL3GSOmavqYIjJLg594ldPL7DX7vDI1hJ68l8oBuUROYOJMi9UqcVZxqthpKlGb2uWXpmMXxl2hezyijR348Zoz4jwncJ3qumbLhZNIMadUiXahZhzvRk0HVEGrBH0RA_c2D5WxyeYNONgyURuO1MsCvgNqNjgus7fpK7-N3HYqggmRk6BMIU1oSTeghxKD-32aRXylPgfH5abhiDbkp_LzxScFcXgCU8GVNdXIm3mPgeZTQdXqtqxGsKp4fYSfIdnBjRxVLOBH_7w2PMPGmi6nG2PNAtyT1KnYdMqIDNlhHzmtqvQuXPLbvf5m3X5noPp8z_SUW523NeFe3t1J4VLAJMlFg6R34XMPOxGXEJBiBVXwOUjD5sVzo4dN07OYbM0-abPc9IknmaXDVLUnTIFvdDEjJvtWpUdW8PsfJO3IU7bhblWqHCKH3s1iNZF7LWYJmC1UH2M7Yn-oSUh1u4VYuu-mQXLu-6GeP_8CeON9CxLmaYm9QvXJvOEyTKd63vQzyv1edzun53zCHCgVPDCPNhvpHoS3oifK2GLnk1kS0etmq8FoESmS26Q2jKv_zFIDhi05xbuWSzTs3wj7AvZqkEmYdvBhzUrtclFX706rjwb1hLEmVr_16uorBpccOq5YfcYPPT1f_bzpJoE";
+    localStorage.setItem('access_token', accessToken);
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -62,7 +74,7 @@ export default function ProductDetail() {
       setProduct(transformedProduct);
       
       // Set initial selected media
-      if (transformedProduct.media && transformedProduct.media.length > 0) {
+      if (transformedProduct.media && Array.isArray(transformedProduct.media) && transformedProduct.media.length > 0) {
         setSelectedMedia(transformedProduct.media[0]);
       }
 
@@ -89,9 +101,11 @@ export default function ProductDetail() {
         setPriceData(data.data);
       } else {
         console.error('Price API Error:', data.message);
+        toast.error('Failed to load price information');
       }
     } catch (error) {
       console.error('Price fetch error:', error);
+      toast.error('Failed to load price information');
     } finally {
       setPriceLoading(false);
     }
@@ -163,7 +177,11 @@ export default function ProductDetail() {
       productSpecifications: apiData.product_specification || [],
       feedbackRating: apiData.feedback_rating || {},
       description: apiData.short_desc || '',
-      colors: apiData.product_color ? apiData.product_color.map(color => color.color) : ['Default'],
+      colors: apiData.product_color ? apiData.product_color.map(color => ({
+        id: color.product_variation_colorid,
+        name: color.color,
+        image: color.image
+      })) : [],
       discount_percentage: parseInt(apiData.discount_percentage || 0),
       relatedProducts: [] // This would need a separate API call for related products
     };
@@ -214,6 +232,23 @@ export default function ProductDetail() {
     setQuantity(newQuantity);
   };
 
+  const handleAddToCart = async () => {
+    if (!product || !product.id) return;
+
+    const result = await addToCart(
+      product.id,
+      quantity,
+      selectedColor,
+      selectedSize
+    );
+
+    if (result.success) {
+      toast.success('Product added to cart successfully!');
+    } else {
+      toast.error(`Failed to add to cart: ${result.message}`);
+    }
+  };
+
   const handleVisitStore = () => {
     if (product && product.store_id) {
       window.open(`https://www.bonzicart.com/store?store=${product.store_id}`, '_blank');
@@ -225,10 +260,12 @@ export default function ProductDetail() {
     
     setIsFollowLoading(true);
     try {
+      const accessToken = localStorage.getItem('access_token');
       const response = await fetch('https://api.glst.in/api/v1/store/follow-unfollow', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
           store_id: product.store_id,
@@ -244,11 +281,11 @@ export default function ProductDetail() {
         console.log(data.message || 'Follow status updated successfully');
       } else {
         console.error('API Error:', data.message);
-        // Optional: Show error message to user
+        toast.error(`Failed to ${!isFollowing ? 'follow' : 'unfollow'} seller: ${data.message}`);
       }
     } catch (error) {
       console.error('Network Error:', error);
-      // Optional: Show error message to user
+      toast.error('Network error. Please try again later.');
     } finally {
       setIsFollowLoading(false);
     }
@@ -269,7 +306,7 @@ export default function ProductDetail() {
         <meta name="description" content={product.description || `Buy ${product.name} at best price from ${product.seller}`} />
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={product.media[0]?.url} />
+        <meta property="og:image" content={product.media && Array.isArray(product.media) && product.media[0]?.url} />
         <meta property="og:type" content="product" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={`https://bonzicart.com/product/${id}`} />
@@ -303,7 +340,7 @@ export default function ProductDetail() {
                   )}
                 </div>
                 <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full scrollbar-hide">
-                  {product.media.map((media, idx) => (
+                  {product.media && product.media.length > 0 && product.media.map((media, idx) => (
                     <button
                       key={idx}
                       className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
@@ -384,11 +421,11 @@ export default function ProductDetail() {
                           <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{parseFloat(priceData.sale_price.replace('INR ', ''))}</span>
+                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{priceData.sale_price ? parseFloat(priceData.sale_price.replace('INR ', '')).toFixed(2) : 'N/A'}</span>
                           <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm sm:text-base font-bold text-red-600">₹{parseFloat(priceData.sale_price_with_tax.replace('INR ', ''))} / Piece</span>
+                          <span className="text-sm sm:text-base font-bold text-red-600">₹{priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')).toFixed(2) : 'N/A'} / Piece</span>
                           <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                         {priceData.stock < 10 && (
@@ -484,17 +521,30 @@ export default function ProductDetail() {
                   <div className="w-full">
                     <div className="grid grid-cols-[auto,1fr] items-center gap-x-2 sm:gap-x-4 gap-y-2 sm:gap-y-3 text-xs sm:text-sm">
                       {/* Color - Only show if colors exist and are not just 'Default' */}
-                      {product.colors && product.colors.length > 0 && product.colors[0] !== 'Default' && (
+                      {product.colors && Array.isArray(product.colors) && product.colors.length > 0 && (
                         <>
                           <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
                           <div className="flex gap-1 sm:gap-2 overflow-x-auto">
                             {product.colors.map((color) => (
                               <button 
-                                key={color} 
-                                className="px-1 sm:px-2 py-0.5 bg-gray-100 rounded border border-gray-300 text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0"
-                                aria-label={`Select ${color} color`}
+                                key={color.id} 
+                                className={`px-1 sm:px-2 py-0.5 bg-gray-100 rounded border text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0 ${
+                                  selectedColor === color.id ? 'border-orange-500 bg-orange-50' : 'border-gray-300'
+                                }`}
+                                onClick={() => {
+                                  setSelectedColor(color.id);
+                                  // Update the displayed image to the selected color's image
+                                  if (color.image) {
+                                    setSelectedMedia({
+                                      type: 'image',
+                                      url: color.image,
+                                      thumbnail: color.image
+                                    });
+                                  }
+                                }}
+                                aria-label={`Select ${color.name} color`}
                               >
-                                {color}
+                                {color.name}
                               </button>
                             ))}
                           </div>
@@ -540,16 +590,25 @@ export default function ProductDetail() {
                         {priceData ? (
                           <div className="flex flex-col">
                             {(() => {
-                              const unitPriceWithTax = parseFloat(priceData.sale_price_with_tax.replace('INR ', ''));
-                              const totalPrice = (quantity * unitPriceWithTax).toFixed(2);
-                              return (
-                                <>
+                              try {
+                                const unitPriceWithTax = priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')) : 0;
+                                const totalPrice = (quantity * unitPriceWithTax).toFixed(2);
+                                return (
+                                  <>
+                                    <span className="text-green-600 font-bold text-xs sm:text-sm">
+                                      ₹{totalPrice} 
+                                      <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
+                                    </span>
+                                  </>
+                                );
+                              } catch (error) {
+                                return (
                                   <span className="text-green-600 font-bold text-xs sm:text-sm">
-                                    ₹{totalPrice} 
-                                    <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
+                                    ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
+                                    <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
                                   </span>
-                                </>
-                              );
+                                );
+                              }
                             })()}
                           </div>
                         ) : (
@@ -570,10 +629,12 @@ export default function ProductDetail() {
                           Buy Now
                         </button>
                         <button 
-                          className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs"
+                          className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={handleAddToCart}
+                          disabled={cartLoading}
                           aria-label="Add this product to cart"
                         >
-                          Add To Cart
+                          {cartLoading ? 'Adding...' : 'Add To Cart'}
                         </button>
                         <button 
                           className="text-orange-500 text-base sm:text-lg hover:text-orange-600"
