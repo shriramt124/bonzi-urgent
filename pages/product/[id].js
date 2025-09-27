@@ -3,17 +3,15 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
+
 import toast from 'react-hot-toast';
 import Layout from '../../components/Layout';
 import ContactSellerModal from '../../components/ContactSellerModal';
 import ProductTabs from '../../components/product/ProductTabs';
 import { useCart } from '../../contexts/CartContext';
 
-// Dynamic imports for better performance
-const RelatedProducts = dynamic(() => import('../../components/product/RelatedProducts'), {
-  loading: () => <div className="animate-pulse bg-gray-200 h-32 rounded"></div>
-});
+// Regular import to avoid webpack issues
+import RelatedProducts from '../../components/product/RelatedProducts';
 
 export default function ProductDetail() {
   const router = useRouter();
