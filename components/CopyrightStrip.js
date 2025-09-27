@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaYoutube, FaPintere
 
 export default function CopyrightStrip() {
   return (
-    <div className="w-full bg-gray-900 text-white py-3 sm:py-6 absolute  left-0 ">
+    <div className="w-full bg-gray-900 text-white py-3 sm:py-6 absolute  left-0 bottom-0 ">
       <div className="px-2 sm:px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-2 sm:mb-0">

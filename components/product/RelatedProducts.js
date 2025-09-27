@@ -3,7 +3,7 @@ export default function RelatedProducts({ relatedProducts }) {
     <div className="mt-6">
       <h2 className="text-xl font-bold text-gray-800 mb-4">Related Products</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
-        {relatedProducts.map((related) => (
+        {relatedProducts?.map((related) => (
           <div
             key={related.id}
             className="bg-white border border-gray-200 rounded-lg p-3 text-center hover:shadow-lg transition-shadow duration-200"
