@@ -89,8 +89,8 @@ export default function Footer() {
       
 
       {/* Copyright Section */}
-      <div className="w-full bg-gray-900 text-white py-3 px-4 sm:py-6">
-        <div className="w-full">
+      <div className="w-full bg-gray-900 text-white py-3 sm:py-6">
+        <div className="w-full px-4">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
               <div className="flex items-center space-x-2 sm:space-x-4">
                 <img src="/BonziLogo.png" alt="BonziCart Logo" className="h-6 w-6 sm:h-8 sm:w-auto" />
