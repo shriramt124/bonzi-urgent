@@ -1,4 +1,3 @@
-
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -311,13 +310,13 @@ export default function ProductDetail() {
 
       <Layout>
         <div className="bg-gray-100 py-1 sm:py-2 md:py-4 pt-20 sm:pt-24 md:pt-28">
-          <div className="max-w-6xl mx-auto px-0.5 sm:px-2 md:px-4 lg:px-8">
+          <div className="max-w-6xl mx-auto px-1 sm:px-2 md:px-4 lg:px-8">
             
             {/* Main Product Section */}
-            <div className="bg-white p-0.5 sm:p-2 md:p-4 rounded-lg shadow-sm flex flex-col lg:flex-row gap-1 sm:gap-2 md:gap-4">
+            <div className="bg-white p-1 sm:p-2 md:p-4 rounded-lg shadow-sm flex flex-col lg:flex-row gap-2 md:gap-4">
               {/* Left: Product Gallery */}
               <div className="w-full lg:w-1/2 flex flex-col items-center">
-                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-1 sm:mb-2 md:mb-4">
+                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-2">
                   {selectedMedia ? (
                     selectedMedia.type === 'video' ? (
                       <video src={selectedMedia.url} controls autoPlay muted loop className="w-full h-full object-contain" />
@@ -367,9 +366,9 @@ export default function ProductDetail() {
               </div>
 
               {/* Right: Product Info */}
-              <div className="w-full lg:w-1/2 flex flex-col gap-1 sm:gap-2">
+              <div className="w-full lg:w-1/2 flex flex-col gap-2 sm:gap-3">
                 <div className="flex items-start justify-between">
-                  <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight flex-1 pr-2">{product.name}</h1>
+                  <h1 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 leading-tight flex-1 pr-2">{product.name}</h1>
                   <button
                     className="p-1 rounded hover:bg-gray-100 text-orange-500 border border-gray-200 flex-shrink-0"
                     aria-label="Share product"
@@ -395,7 +394,7 @@ export default function ProductDetail() {
                   </button>
                 </div>
                 
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-gray-600">
                   <span className="flex items-center">
                     {[...Array(5)].map((_, i) => (
                       <span key={i} className={`text-[10px] sm:text-xs ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>⭐</span>
@@ -406,24 +405,24 @@ export default function ProductDetail() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
-                  <div className="bg-gray-50 p-2 rounded-md flex-1">
+                  <div className="bg-gray-50 p-2 rounded-md flex-1 w-full">
                     {priceLoading ? (
                       <div className="flex items-center justify-center h-16">
                         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500"></div>
                       </div>
                     ) : priceData ? (
                       <div>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-1 sm:mb-2">
                           <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{priceData.mrp}</span>
-                          <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
+                          <span className="text-green-600 font-semibold text-[10px] sm:text-xs">Save {priceData.save_percentage}%</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{priceData.sale_price ? parseFloat(priceData.sale_price.replace('INR ', '')).toFixed(2) : 'N/A'}</span>
-                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
+                          <span className="text-[10px] sm:text-xs text-gray-500">(Exclusive of all taxes)</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-sm sm:text-base font-bold text-red-600">₹{priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')).toFixed(2) : 'N/A'} / Piece</span>
-                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
+                          <span className="text-[10px] sm:text-xs text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                         {priceData.stock < 10 && (
                           <div className="text-xs text-red-600 mt-1 font-semibold">
@@ -433,29 +432,29 @@ export default function ProductDetail() {
                       </div>
                     ) : (
                       <div>
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-1 sm:mb-2">
                           <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{product.priceDetails.mrp.toFixed(2)}</span>
-                          <span className="text-green-600 font-semibold text-xs">Save {getSavePercentage()}%</span>
+                          <span className="text-green-600 font-semibold text-[10px] sm:text-xs">Save {getSavePercentage()}%</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{product.priceDetails.price.toFixed(2)}</span>
-                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
+                          <span className="text-[10px] sm:text-xs text-gray-500">(Exclusive of all taxes)</span>
                         </div>
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-sm sm:text-base font-bold text-red-600">₹{product.priceDetails.finalPrice.toFixed(2)} / Piece</span>
-                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
+                          <span className="text-[10px] sm:text-xs text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                       </div>
                     )}
                   </div>
 
                   <div 
-                    className="relative"
+                    className="relative w-full sm:w-auto"
                     onMouseEnter={() => setShowBulkPrice(true)}
                     onMouseLeave={() => setShowBulkPrice(false)}
                   >
                     <button 
-                      className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center gap-1 sm:gap-2 transition-colors duration-200 text-xs sm:text-sm"
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center justify-center gap-1 sm:gap-2 transition-colors duration-200 text-xs sm:text-sm w-full"
                       aria-label="View bulk pricing options"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -464,29 +463,29 @@ export default function ProductDetail() {
                       Bulk Price
                     </button>
                     {showBulkPrice && (
-                      <div className="absolute top-full right-0 mt-2 w-64 sm:w-72 bg-white border rounded-lg shadow-lg z-10 p-3">
+                      <div className="absolute top-full right-0 mt-2 w-64 sm:w-72 bg-white border rounded-lg shadow-lg z-10 p-2 sm:p-3">
                         <h4 className="font-bold text-xs sm:text-sm mb-2 text-gray-900">Seller Bulk Price Details:</h4>
                         <div className="overflow-x-auto">
-                          <table className="w-full text-xs text-left text-black">
+                          <table className="w-full text-[10px] sm:text-xs text-left text-black">
                               <thead className="bg-gray-100">
                                   <tr>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">From</th>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">To</th>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">Bulk Price (₹)</th>
+                                      <th className="p-1 sm:p-2 font-semibold text-black text-[10px] sm:text-xs">From</th>
+                                      <th className="p-1 sm:p-2 font-semibold text-black text-[10px] sm:text-xs">To</th>
+                                      <th className="p-1 sm:p-2 font-semibold text-black text-[10px] sm:text-xs">Bulk Price (₹)</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   {(priceData?.bulk_price || product.bulkPricing).map((tier, index) => (
                                       <tr key={index} className="border-b">
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_from || tier.from}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_to || tier.to}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">₹ {tier.bulk_price_amount || tier.price}</td>
+                                          <td className="p-1 sm:p-2 text-black text-[10px] sm:text-xs">{tier.bulk_price_from || tier.from}</td>
+                                          <td className="p-1 sm:p-2 text-black text-[10px] sm:text-xs">{tier.bulk_price_to || tier.to}</td>
+                                          <td className="p-1 sm:p-2 text-black text-[10px] sm:text-xs">₹ {tier.bulk_price_amount || tier.price}</td>
                                       </tr>
                                   ))}
                               </tbody>
                           </table>
                         </div>
-                        <p className="text-xs text-black mt-2">
+                        <p className="text-[10px] sm:text-xs text-black mt-2">
                             <strong>Note:</strong> Once you adjust the quantity in BonziCart, the price will automatically update according to the bulk pricing offer by seller. BonziCart always suggests purchasing in bulk under a business name with a registered GST number to avail the GST benefits.
                         </p>
                       </div>
@@ -494,20 +493,40 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                <div className="flex md:grid md:grid-cols-5 gap-1 text-center text-xs border-y py-2 overflow-x-auto scrollbar-hide">
-                  {[
-                    { icon: "M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.664 0l3.181-3.183m-4.991-2.696a8.25 8.25 0 00-11.664 0l-3.181 3.183", title: "Replacement", value: product.shippingInfo.Replacement, color: "orange" },
-                    { icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z", title: "Processing", value: product.shippingInfo.Processing, color: "blue" },
-                    { icon: "M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-9m17.25 9v-9m-17.25-9l5.25-5.25h9l5.25 5.25m-17.25 0h17.25", title: "Shipping", value: product.shippingInfo.Shipping, color: "yellow" },
-                    { icon: "M13.5 21v-7.5A2.25 2.25 0 0011.25 11.25H10.5a2.25 2.25 0 00-2.25 2.25V21M3 3h18M5.25 3v18m13.5-18v18M9 6.75h6.375a.75.75 0 01.75.75v3.375a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75V7.5a.75.75 0 01.75-.75z", title: "Seller", value: product.shippingInfo.Seller, color: "orange" },
-                    { icon: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z", title: "Warranty", value: product.shippingInfo.Warranty, color: "green" }
+                <div className="flex gap-3 text-center text-xs border-y py-2 overflow-x-auto scrollbar-hide md:grid md:grid-cols-5 md:gap-1">
+                  {[{
+                    icon: "M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.664 0l3.181-3.183m-4.991-2.696a8.25 8.25 0 00-11.664 0l-3.181 3.183",
+                    title: "Replacement",
+                    value: product.shippingInfo.Replacement,
+                    color: "orange"
+                  }, {
+                    icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z",
+                    title: "Processing",
+                    value: product.shippingInfo.Processing,
+                    color: "blue"
+                  }, {
+                    icon: "M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125V14.25m-17.25 4.5v-9m17.25 9v-9m-17.25-9l5.25-5.25h9l5.25 5.25m-17.25 0h17.25",
+                    title: "Shipping",
+                    value: product.shippingInfo.Shipping,
+                    color: "yellow"
+                  }, {
+                    icon: "M13.5 21v-7.5A2.25 2.25 0 0011.25 11.25H10.5a2.25 2.25 0 00-2.25 2.25V21M3 3h18M5.25 3v18m13.5-18v18M9 6.75h6.375a.75.75 0 01.75.75v3.375a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75V7.5a.75.75 0 01.75-.75z",
+                    title: "Seller",
+                    value: product.shippingInfo.Seller,
+                    color: "orange"
+                  }, {
+                    icon: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z",
+                    title: "Warranty",
+                    value: product.shippingInfo.Warranty,
+                    color: "green"
+                  }
                   ].map((item, index) => (
-                    <div key={index} className="flex-shrink-0 w-16 sm:w-20 md:w-auto">
+                    <div key={index} className="flex-shrink-0 w-20 sm:w-24 md:w-auto">
                       <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 sm:h-5 sm:w-5 mx-auto text-${item.color}-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                       </svg>
-                      <div className={`font-semibold text-${item.color}-500 mt-1 text-xs`}>{item.title}</div>
-                      <div className="text-gray-600 text-xs">{item.value}</div>
+                      <div className={`font-semibold text-${item.color}-500 mt-1 text-[10px] sm:text-xs`}>{item.title}</div>
+                      <div className="text-gray-600 text-[10px] sm:text-xs">{item.value}</div>
                     </div>
                   ))}
                 </div>
@@ -520,23 +539,18 @@ export default function ProductDetail() {
                       {/* Color - Only show if colors exist and are not just 'Default' */}
                       {product.colors && Array.isArray(product.colors) && product.colors.length > 0 && (
                         <>
-                          <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
-                          <div className="flex gap-1 sm:gap-2 overflow-x-auto">
+                          <span className="font-medium text-gray-500">Color</span>
+                          <div className="flex gap-2 overflow-x-auto">
                             {product.colors.map((color) => (
                               <button 
                                 key={color.id} 
-                                className={`px-1 sm:px-2 py-0.5 bg-gray-100 rounded border text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0 ${
+                                className={`px-2 py-1 bg-gray-100 rounded border text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0 ${
                                   selectedColor === color.id ? 'border-orange-500 bg-orange-50' : 'border-gray-300'
                                 }`}
                                 onClick={() => {
                                   setSelectedColor(color.id);
-                                  // Update the displayed image to the selected color's image
                                   if (color.image) {
-                                    setSelectedMedia({
-                                      type: 'image',
-                                      url: color.image,
-                                      thumbnail: color.image
-                                    });
+                                    setSelectedMedia({ type: 'image', url: color.image, thumbnail: color.image });
                                   }
                                 }}
                                 aria-label={`Select ${color.name} color`}
@@ -566,20 +580,20 @@ export default function ProductDetail() {
                         >
                           +
                         </button>
-                        <span className="text-green-600 text-xs ml-1 sm:ml-2">(Stock {priceData?.stock || product.stock} pieces)</span>
+                        <span className="text-green-600 text-[10px] sm:text-xs ml-1 sm:ml-2">(Stock {priceData?.stock || product.stock} pieces)</span>
                       </div>
 
                       {/* Empty cell for alignment */}
                       <span></span> 
-                      <div className="text-xs text-orange-600">Want to buy in bulk? <a href="#" className="underline font-semibold">Learn about bulk pricing options</a></div>
+                      <div className="text-[10px] sm:text-xs text-orange-600">Want to buy in bulk? <a href="#" className="underline font-semibold">Learn about bulk pricing options</a></div>
 
                       {/* Shipping */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Shipping</span>
-                      <span className="text-green-600 font-semibold text-xs sm:text-sm">Free Shipping</span>
+                      <span className="text-green-600 font-semibold text-sm">Free Shipping</span>
 
                       {/* COD */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">COD</span>
-                      <span className="text-gray-500 font-semibold text-xs sm:text-sm">{product.codAvailable ? 'Available' : 'Not Available'}</span>
+                      <span className="text-gray-500 font-semibold text-sm">{product.codAvailable ? 'Available' : 'Not Available'}</span>
 
                       {/* Total Price */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Total Price</span>
@@ -594,7 +608,7 @@ export default function ProductDetail() {
                                   <>
                                     <span className="text-green-600 font-bold text-xs sm:text-sm">
                                       ₹{totalPrice} 
-                                      <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
+                                      <span className="text-gray-600 font-normal ml-1 text-[10px] sm:text-xs">(incl. tax)</span>
                                     </span>
                                   </>
                                 );
@@ -602,7 +616,7 @@ export default function ProductDetail() {
                                 return (
                                   <span className="text-green-600 font-bold text-xs sm:text-sm">
                                     ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
-                                    <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
+                                    <span className="text-gray-600 font-normal ml-1 text-[10px] sm:text-xs">(Qty: {quantity})</span>
                                   </span>
                                 );
                               }
@@ -611,22 +625,22 @@ export default function ProductDetail() {
                         ) : (
                           <span className="text-green-600 font-bold text-xs sm:text-sm">
                             ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
-                            <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
+                            <span className="text-gray-600 font-normal ml-1 text-[10px] sm:text-xs">(Qty: {quantity})</span>
                           </span>
                         )}
                       </div>
 
                       {/* Action */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Action</span>
-                      <div className="flex flex-row gap-1 sm:gap-2 items-center">
+                      <div className="flex flex-row flex-wrap gap-2 items-center">
                         <button 
-                          className="w-16 sm:w-20 md:w-24 bg-orange-500 text-white px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-600 text-xs"
+                          className="flex-1 bg-orange-500 text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded font-semibold shadow hover:bg-orange-600 text-xs text-center min-w-[80px]"
                           aria-label="Buy this product now"
                         >
                           Buy Now
                         </button>
                         <button 
-                          className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex-1 bg-white border border-orange-500 text-orange-500 px-2 py-1 sm:px-3 sm:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed text-center min-w-[80px]"
                           onClick={handleAddToCart}
                           disabled={cartLoading}
                           aria-label="Add this product to cart"
@@ -634,7 +648,7 @@ export default function ProductDetail() {
                           {cartLoading ? 'Adding...' : 'Add To Cart'}
                         </button>
                         <button 
-                          className="text-orange-500 text-base sm:text-lg hover:text-orange-600"
+                          className="text-orange-500 text-base sm:text-lg hover:text-orange-600 p-1"
                           aria-label="Add to wishlist"
                         >
                           ♡
@@ -644,7 +658,7 @@ export default function ProductDetail() {
                       {/* Promotions */}
                       <span className="font-medium text-gray-500 text-xs sm:text-sm">Promotions</span>
                       <button 
-                        className="bg-gray-100 border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1 rounded-lg shadow-sm flex items-center gap-1 sm:gap-2 text-xs hover:bg-gray-200 w-fit"
+                        className="bg-gray-100 border border-gray-300 text-gray-700 px-2 py-1 sm:px-3 sm:py-1 rounded-lg shadow-sm flex items-center gap-1 sm:gap-2 text-xs hover:bg-gray-200 w-fit"
                         aria-label="View available seller coupons"
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -657,7 +671,7 @@ export default function ProductDetail() {
 
                   {/* Right Column */}
                   <div className="w-full xl:w-64 flex flex-col gap-1 sm:gap-2">
-                    <div className="p-1 sm:p-2 md:p-3 bg-gray-50 rounded-lg flex flex-col gap-1" style={{ height: 'auto' }}>
+                    <div className="p-2 md:p-3 bg-gray-50 rounded-lg flex flex-col gap-1" style={{ height: 'auto' }}>
                       <div className="text-xs text-gray-600">Sold By</div>
                       <div className="font-bold text-orange-600 text-xs md:text-sm">{product.seller}</div>
                       <div className="flex flex-col text-xs text-gray-700 gap-0.5">
@@ -666,7 +680,7 @@ export default function ProductDetail() {
                       </div>
                       <div className="flex flex-col gap-1">
                         <button 
-                          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-lg font-semibold shadow text-xs"
+                          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg font-semibold shadow text-xs"
                           onClick={() => setShowContactModal(true)}
                           aria-label="Contact the seller"
                         >
