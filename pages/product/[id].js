@@ -310,7 +310,7 @@ export default function ProductDetail() {
       </Head>
 
       <Layout>
-        <div className="w-full bg-gray-100 py-1 sm:py-2 md:py-4 pt-20 sm:pt-24 md:pt-28">
+        <div className="bg-gray-100 py-1 sm:py-2 md:py-4 pt-20 sm:pt-24 md:pt-28">
           <div className="max-w-6xl mx-auto px-0.5 sm:px-2 md:px-4 lg:px-8">
             
             {/* Main Product Section */}
