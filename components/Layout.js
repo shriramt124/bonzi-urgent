@@ -22,7 +22,7 @@ export default function Layout({ children }) {
   return (
     <>
       {/* Header and Main Content - Contained Layout */}
-      <div className="min-h-screen bg-gray-100 flex flex-col w-full">
+      <div className="min-h-screen bg-gray-100 flex flex-col">
         <Header 
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
@@ -41,9 +41,7 @@ export default function Layout({ children }) {
       <Footer />
       
       {/* Copyright Strip - Completely decoupled, true full viewport width */}
-      <div className="w-full">
-        <CopyrightStrip />
-      </div>
+      <CopyrightStrip />
     </>
   );
 }
