@@ -310,14 +310,14 @@ export default function ProductDetail() {
       </Head>
 
       <Layout>
-        <div className="w-full bg-gray-100 py-1 sm:py-2 md:py-4 pt-20 sm:pt-24 md:pt-28">
-          <div className="max-w-6xl mx-auto px-0.5 sm:px-2 md:px-4 lg:px-8">
+        <div className="w-full bg-gray-100 py-2 sm:py-4 md:py-6 pt-16 sm:pt-20 md:pt-24">
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
             
             {/* Main Product Section */}
-            <div className="bg-white p-0.5 sm:p-2 md:p-4 rounded-lg shadow-sm flex flex-col lg:flex-row gap-1 sm:gap-2 md:gap-4">
+            <div className="bg-white p-3 sm:p-4 md:p-6 rounded-lg shadow-sm flex flex-col lg:flex-row gap-4 sm:gap-6 md:gap-8">
               {/* Left: Product Gallery */}
               <div className="w-full lg:w-1/2 flex flex-col items-center">
-                <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-1 sm:mb-2 md:mb-4">
+                <div className="w-full max-w-sm sm:max-w-md md:max-w-lg aspect-square bg-gray-100 flex items-center justify-center rounded-lg overflow-hidden mb-3 sm:mb-4 md:mb-6">
                   {selectedMedia ? (
                     selectedMedia.type === 'video' ? (
                       <video src={selectedMedia.url} controls autoPlay muted loop className="w-full h-full object-contain" />
@@ -333,14 +333,14 @@ export default function ProductDetail() {
                       />
                     )
                   ) : (
-                    <div className="text-gray-400 text-xs sm:text-sm">No image available</div>
+                    <div className="text-gray-400 text-sm md:text-base">No image available</div>
                   )}
                 </div>
-                <div className="flex gap-1 sm:gap-2 justify-center overflow-x-auto max-w-full scrollbar-hide">
+                <div className="flex gap-2 sm:gap-3 justify-center overflow-x-auto max-w-full scrollbar-hide">
                   {product.media && product.media.length > 0 && product.media.map((media, idx) => (
                     <button
                       key={idx}
-                      className={`border-2 rounded-lg w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
+                      className={`border-2 rounded-lg w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 flex items-center justify-center overflow-hidden flex-shrink-0 ${selectedMedia && selectedMedia.url === media.url ? 'border-orange-500' : 'border-gray-200'}`}
                       onClick={() => setSelectedMedia(media)}
                       aria-label={`View ${media.type === 'video' ? 'video' : 'image'} ${idx + 1} of ${product.media.length}`}
                     >
@@ -348,16 +348,16 @@ export default function ProductDetail() {
                         <Image 
                           src={media.thumbnail} 
                           alt="Video thumbnail" 
-                          width={64}
-                          height={64}
+                          width={72}
+                          height={72}
                           className="w-full h-full object-cover"
                         />
                       ) : (
                         <Image 
                           src={media.url} 
                           alt="Thumbnail" 
-                          width={64}
-                          height={64}
+                          width={72}
+                          height={72}
                           className="w-full h-full object-cover"
                         />
                       )}
@@ -367,11 +367,11 @@ export default function ProductDetail() {
               </div>
 
               {/* Right: Product Info */}
-              <div className="w-full lg:w-1/2 flex flex-col gap-1 sm:gap-2">
-                <div className="flex items-start justify-between">
-                  <h1 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-gray-800 leading-tight flex-1 pr-2">{product.name}</h1>
+              <div className="w-full lg:w-1/2 flex flex-col gap-3 sm:gap-4">
+                <div className="flex items-start justify-between gap-3">
+                  <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 leading-tight flex-1">{product.name}</h1>
                   <button
-                    className="p-1 rounded hover:bg-gray-100 text-orange-500 border border-gray-200 flex-shrink-0"
+                    className="p-2 rounded hover:bg-gray-100 text-orange-500 border border-gray-200 flex-shrink-0"
                     aria-label="Share product"
                     onClick={() => {
                       if (navigator.share) {
@@ -395,98 +395,98 @@ export default function ProductDetail() {
                   </button>
                 </div>
                 
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                <div className="flex items-center gap-3 text-sm sm:text-base text-gray-600">
                   <span className="flex items-center">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className={`text-[10px] sm:text-xs ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>⭐</span>
+                      <span key={i} className={`text-sm sm:text-base ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>⭐</span>
                     ))}
                   </span>
-                  <span className="text-[10px] sm:text-xs">{product.rating} ({product.reviews} feedbacks)</span>
-                  <span className="text-[10px] sm:text-xs">{product.orders} orders</span>
+                  <span className="text-xs sm:text-sm">{product.rating} ({product.reviews} feedbacks)</span>
+                  <span className="text-xs sm:text-sm">{product.orders} orders</span>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
-                  <div className="bg-gray-50 p-2 rounded-md flex-1">
+                <div className="flex flex-col gap-3">
+                  <div className="bg-gray-50 p-3 sm:p-4 rounded-md">
                     {priceLoading ? (
-                      <div className="flex items-center justify-center h-16">
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500"></div>
+                      <div className="flex items-center justify-center h-20">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                       </div>
                     ) : priceData ? (
                       <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{priceData.mrp}</span>
-                          <span className="text-green-600 font-semibold text-xs">Save {priceData.save_percentage}%</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="line-through text-gray-500 text-sm sm:text-base">MRP: ₹{priceData.mrp}</span>
+                          <span className="text-green-600 font-semibold text-sm">Save {priceData.save_percentage}%</span>
                         </div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{priceData.sale_price ? parseFloat(priceData.sale_price.replace('INR ', '')).toFixed(2) : 'N/A'}</span>
-                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600">Price: ₹{priceData.sale_price ? parseFloat(priceData.sale_price.replace('INR ', '')).toFixed(2) : 'N/A'}</span>
+                          <span className="text-xs sm:text-sm text-gray-500">(Exclusive of all taxes)</span>
                         </div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm sm:text-base font-bold text-red-600">₹{priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')).toFixed(2) : 'N/A'} / Piece</span>
-                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="text-base sm:text-lg font-bold text-red-600">₹{priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')).toFixed(2) : 'N/A'} / Piece</span>
+                          <span className="text-xs sm:text-sm text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                         {priceData.stock < 10 && (
-                          <div className="text-xs text-red-600 mt-1 font-semibold">
+                          <div className="text-sm text-red-600 mt-2 font-semibold">
                             Only {priceData.stock} left in stock!
                           </div>
                         )}
                       </div>
                     ) : (
                       <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="line-through text-gray-500 text-xs sm:text-sm">MRP: ₹{product.priceDetails.mrp.toFixed(2)}</span>
-                          <span className="text-green-600 font-semibold text-xs">Save {getSavePercentage()}%</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="line-through text-gray-500 text-sm sm:text-base">MRP: ₹{product.priceDetails.mrp.toFixed(2)}</span>
+                          <span className="text-green-600 font-semibold text-sm">Save {getSavePercentage()}%</span>
                         </div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-base sm:text-lg md:text-xl font-bold text-orange-600">Price: ₹{product.priceDetails.price.toFixed(2)}</span>
-                          <span className="text-xs text-gray-500">(Exclusive of all taxes)</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="text-lg sm:text-xl md:text-2xl font-bold text-orange-600">Price: ₹{product.priceDetails.price.toFixed(2)}</span>
+                          <span className="text-xs sm:text-sm text-gray-500">(Exclusive of all taxes)</span>
                         </div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm sm:text-base font-bold text-red-600">₹{product.priceDetails.finalPrice.toFixed(2)} / Piece</span>
-                          <span className="text-xs text-gray-500">(Inclusive of all taxes)</span>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <span className="text-base sm:text-lg font-bold text-red-600">₹{product.priceDetails.finalPrice.toFixed(2)} / Piece</span>
+                          <span className="text-xs sm:text-sm text-gray-500">(Inclusive of all taxes)</span>
                         </div>
                       </div>
                     )}
                   </div>
 
                   <div 
-                    className="relative"
+                    className="relative w-fit"
                     onMouseEnter={() => setShowBulkPrice(true)}
                     onMouseLeave={() => setShowBulkPrice(false)}
                   >
                     <button 
-                      className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center gap-1 sm:gap-2 transition-colors duration-200 text-xs sm:text-sm"
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-md font-semibold flex items-center gap-2 transition-colors duration-200 text-sm sm:text-base"
                       aria-label="View bulk pricing options"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                       Bulk Price
                     </button>
                     {showBulkPrice && (
-                      <div className="absolute top-full right-0 mt-2 w-64 sm:w-72 bg-white border rounded-lg shadow-lg z-10 p-3">
-                        <h4 className="font-bold text-xs sm:text-sm mb-2 text-gray-900">Seller Bulk Price Details:</h4>
+                      <div className="absolute top-full right-0 mt-2 w-72 sm:w-80 bg-white border rounded-lg shadow-lg z-10 p-4">
+                        <h4 className="font-bold text-sm mb-3 text-gray-900">Seller Bulk Price Details:</h4>
                         <div className="overflow-x-auto">
-                          <table className="w-full text-xs text-left text-black">
+                          <table className="w-full text-sm text-left text-black">
                               <thead className="bg-gray-100">
                                   <tr>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">From</th>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">To</th>
-                                      <th className="p-1 sm:p-2 font-semibold text-black text-xs">Bulk Price (₹)</th>
+                                      <th className="p-2 font-semibold text-black">From</th>
+                                      <th className="p-2 font-semibold text-black">To</th>
+                                      <th className="p-2 font-semibold text-black">Bulk Price (₹)</th>
                                   </tr>
                               </thead>
                               <tbody>
                                   {(priceData?.bulk_price || product.bulkPricing).map((tier, index) => (
                                       <tr key={index} className="border-b">
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_from || tier.from}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">{tier.bulk_price_to || tier.to}</td>
-                                          <td className="p-1 sm:p-2 text-black text-xs">₹ {tier.bulk_price_amount || tier.price}</td>
+                                          <td className="p-2 text-black">{tier.bulk_price_from || tier.from}</td>
+                                          <td className="p-2 text-black">{tier.bulk_price_to || tier.to}</td>
+                                          <td className="p-2 text-black">₹ {tier.bulk_price_amount || tier.price}</td>
                                       </tr>
                                   ))}
                               </tbody>
                           </table>
                         </div>
-                        <p className="text-xs text-black mt-2">
+                        <p className="text-sm text-black mt-3">
                             <strong>Note:</strong> Once you adjust the quantity in BonziCart, the price will automatically update according to the bulk pricing offer by seller. BonziCart always suggests purchasing in bulk under a business name with a registered GST number to avail the GST benefits.
                         </p>
                       </div>
@@ -494,7 +494,7 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                <div className="flex md:grid md:grid-cols-5 gap-1 text-center text-xs border-y py-2 overflow-x-auto scrollbar-hide">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 text-center text-xs sm:text-sm border-y py-3">
                   {[
                     { icon: "M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.664 0l3.181-3.183m-4.991-2.696a8.25 8.25 0 00-11.664 0l-3.181 3.183", title: "Replacement", value: product.shippingInfo.Replacement, color: "orange" },
                     { icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z", title: "Processing", value: product.shippingInfo.Processing, color: "blue" },
@@ -502,35 +502,34 @@ export default function ProductDetail() {
                     { icon: "M13.5 21v-7.5A2.25 2.25 0 0011.25 11.25H10.5a2.25 2.25 0 00-2.25 2.25V21M3 3h18M5.25 3v18m13.5-18v18M9 6.75h6.375a.75.75 0 01.75.75v3.375a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75V7.5a.75.75 0 01.75-.75z", title: "Seller", value: product.shippingInfo.Seller, color: "orange" },
                     { icon: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z", title: "Warranty", value: product.shippingInfo.Warranty, color: "green" }
                   ].map((item, index) => (
-                    <div key={index} className="flex-shrink-0 w-16 sm:w-20 md:w-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 sm:h-5 sm:w-5 mx-auto text-${item.color}-500`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <div key={index} className="flex flex-col items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 sm:h-6 sm:w-6 mx-auto text-${item.color}-500 mb-1`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                       </svg>
-                      <div className={`font-semibold text-${item.color}-500 mt-1 text-xs`}>{item.title}</div>
-                      <div className="text-gray-600 text-xs">{item.value}</div>
+                      <div className={`font-semibold text-${item.color}-500 mb-1 text-xs sm:text-sm`}>{item.title}</div>
+                      <div className="text-gray-600 text-xs sm:text-sm">{item.value}</div>
                     </div>
                   ))}
                 </div>
 
-                {/* Two-column layout starts here */}
-                <div className="flex flex-col xl:flex-row gap-2 sm:gap-4">
-                  {/* Left Column */}
-                  <div className="w-full">
-                    <div className="grid grid-cols-[auto,1fr] items-center gap-x-2 sm:gap-x-4 gap-y-2 sm:gap-y-3 text-xs sm:text-sm">
-                      {/* Color - Only show if colors exist and are not just 'Default' */}
+                {/* Product Options and Actions Layout */}
+                <div className="flex flex-col xl:flex-row gap-4 sm:gap-6">
+                  {/* Left Column - Product Options */}
+                  <div className="flex-1">
+                    <div className="space-y-4">
+                      {/* Color - Only show if colors exist */}
                       {product.colors && Array.isArray(product.colors) && product.colors.length > 0 && (
-                        <>
-                          <span className="font-medium text-gray-500 text-xs sm:text-sm">Color</span>
-                          <div className="flex gap-1 sm:gap-2 overflow-x-auto">
+                        <div>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base mb-2 block">Color</span>
+                          <div className="flex gap-2 flex-wrap">
                             {product.colors.map((color) => (
                               <button 
                                 key={color.id} 
-                                className={`px-1 sm:px-2 py-0.5 bg-gray-100 rounded border text-gray-700 hover:bg-orange-100 text-xs flex-shrink-0 ${
+                                className={`px-3 py-1.5 bg-gray-100 rounded border text-gray-700 hover:bg-orange-100 text-sm ${
                                   selectedColor === color.id ? 'border-orange-500 bg-orange-50' : 'border-gray-300'
                                 }`}
                                 onClick={() => {
                                   setSelectedColor(color.id);
-                                  // Update the displayed image to the selected color's image
                                   if (color.image) {
                                     setSelectedMedia({
                                       type: 'image',
@@ -545,88 +544,92 @@ export default function ProductDetail() {
                               </button>
                             ))}
                           </div>
-                        </>
+                        </div>
                       )}
 
                       {/* Quantity */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Quantity</span>
-                      <div className="flex items-center">
-                        <button 
-                          className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-l text-xs sm:text-sm" 
-                          onClick={() => handleQuantityChange(-1)}
-                          aria-label="Decrease quantity"
-                        >
-                          -
-                        </button>
-                        <span className="px-2 sm:px-3 py-0.5 border-t border-b text-xs sm:text-sm">{quantity}</span>
-                        <button 
-                          className="px-1 sm:px-2 py-0.5 bg-gray-200 text-black rounded-r text-xs sm:text-sm" 
-                          onClick={() => handleQuantityChange(1)}
-                          aria-label="Increase quantity"
-                        >
-                          +
-                        </button>
-                        <span className="text-green-600 text-xs ml-1 sm:ml-2">(Stock {priceData?.stock || product.stock} pieces)</span>
+                      <div>
+                        <span className="font-medium text-gray-700 text-sm sm:text-base mb-2 block">Quantity</span>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center">
+                            <button 
+                              className="px-3 py-2 bg-gray-200 text-black rounded-l text-sm sm:text-base hover:bg-gray-300" 
+                              onClick={() => handleQuantityChange(-1)}
+                              aria-label="Decrease quantity"
+                            >
+                              -
+                            </button>
+                            <span className="px-4 py-2 border-t border-b text-sm sm:text-base bg-white">{quantity}</span>
+                            <button 
+                              className="px-3 py-2 bg-gray-200 text-black rounded-r text-sm sm:text-base hover:bg-gray-300" 
+                              onClick={() => handleQuantityChange(1)}
+                              aria-label="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+                          <span className="text-green-600 text-sm">(Stock {priceData?.stock || product.stock} pieces)</span>
+                        </div>
                       </div>
 
-                      {/* Empty cell for alignment */}
-                      <span></span> 
-                      <div className="text-xs text-orange-600">Want to buy in bulk? <a href="#" className="underline font-semibold">Learn about bulk pricing options</a></div>
+                      {/* Bulk pricing link */}
+                      <div className="text-sm text-orange-600">
+                        Want to buy in bulk? <a href="#" className="underline font-semibold">Learn about bulk pricing options</a>
+                      </div>
 
-                      {/* Shipping */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Shipping</span>
-                      <span className="text-green-600 font-semibold text-xs sm:text-sm">Free Shipping</span>
-
-                      {/* COD */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">COD</span>
-                      <span className="text-gray-500 font-semibold text-xs sm:text-sm">{product.codAvailable ? 'Available' : 'Not Available'}</span>
+                      {/* Shipping and COD */}
+                      <div className="flex flex-wrap gap-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-gray-700">Shipping:</span>
+                          <span className="text-green-600 font-semibold">Free Shipping</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-gray-700">COD:</span>
+                          <span className="text-gray-700 font-semibold">{product.codAvailable ? 'Available' : 'Not Available'}</span>
+                        </div>
+                      </div>
 
                       {/* Total Price */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Total Price</span>
-                      <div className="flex flex-col">
+                      <div className="bg-green-50 p-3 rounded-lg">
+                        <span className="font-medium text-gray-700 text-sm sm:text-base block mb-1">Total Price</span>
                         {priceData ? (
-                          <div className="flex flex-col">
-                            {(() => {
-                              try {
-                                const unitPriceWithTax = priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')) : 0;
-                                const totalPrice = (quantity * unitPriceWithTax).toFixed(2);
-                                return (
-                                  <>
-                                    <span className="text-green-600 font-bold text-xs sm:text-sm">
-                                      ₹{totalPrice} 
-                                      <span className="text-gray-600 font-normal ml-1">(incl. tax)</span>
-                                    </span>
-                                  </>
-                                );
-                              } catch (error) {
-                                return (
-                                  <span className="text-green-600 font-bold text-xs sm:text-sm">
-                                    ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
-                                    <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
-                                  </span>
-                                );
-                              }
-                            })()}
-                          </div>
+                          (() => {
+                            try {
+                              const unitPriceWithTax = priceData.sale_price_with_tax ? parseFloat(priceData.sale_price_with_tax.replace('INR ', '')) : 0;
+                              const totalPrice = (quantity * unitPriceWithTax).toFixed(2);
+                              return (
+                                <span className="text-green-600 font-bold text-lg sm:text-xl">
+                                  ₹{totalPrice} 
+                                  <span className="text-gray-600 font-normal ml-2 text-sm">(incl. tax)</span>
+                                </span>
+                              );
+                            } catch (error) {
+                              return (
+                                <span className="text-green-600 font-bold text-lg sm:text-xl">
+                                  ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
+                                  <span className="text-gray-600 font-normal ml-2 text-sm">(Qty: {quantity})</span>
+                                </span>
+                              );
+                            }
+                          })()
                         ) : (
-                          <span className="text-green-600 font-bold text-xs sm:text-sm">
+                          <span className="text-green-600 font-bold text-lg sm:text-xl">
                             ₹{(product.priceDetails.finalPrice * quantity).toFixed(2)}
-                            <span className="text-gray-600 font-normal ml-1">(Qty: {quantity})</span>
+                            <span className="text-gray-600 font-normal ml-2 text-sm">(Qty: {quantity})</span>
                           </span>
                         )}
                       </div>
 
-                      {/* Action */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Action</span>
-                      <div className="flex flex-row gap-1 sm:gap-2 items-center">
+                      {/* Action Buttons */}
+                      <div className="flex flex-col sm:flex-row gap-3 items-stretch">
                         <button 
-                          className="w-16 sm:w-20 md:w-24 bg-orange-500 text-white px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-600 text-xs"
+                          className="flex-1 bg-orange-500 text-white px-4 py-3 rounded font-semibold shadow hover:bg-orange-600 text-sm sm:text-base"
                           aria-label="Buy this product now"
                         >
                           Buy Now
                         </button>
                         <button 
-                          className="w-16 sm:w-20 md:w-24 bg-white border border-orange-500 text-orange-500 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1.5 rounded font-semibold shadow hover:bg-orange-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex-1 bg-white border-2 border-orange-500 text-orange-500 px-4 py-3 rounded font-semibold shadow hover:bg-orange-50 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                           onClick={handleAddToCart}
                           disabled={cartLoading}
                           aria-label="Add this product to cart"
@@ -634,7 +637,7 @@ export default function ProductDetail() {
                           {cartLoading ? 'Adding...' : 'Add To Cart'}
                         </button>
                         <button 
-                          className="text-orange-500 text-base sm:text-lg hover:text-orange-600"
+                          className="p-3 bg-white border border-gray-300 text-orange-500 rounded hover:bg-gray-50 text-xl"
                           aria-label="Add to wishlist"
                         >
                           ♡
@@ -642,39 +645,40 @@ export default function ProductDetail() {
                       </div>
 
                       {/* Promotions */}
-                      <span className="font-medium text-gray-500 text-xs sm:text-sm">Promotions</span>
-                      <button 
-                        className="bg-gray-100 border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 md:px-3 md:py-1 rounded-lg shadow-sm flex items-center gap-1 sm:gap-2 text-xs hover:bg-gray-200 w-fit"
-                        aria-label="View available seller coupons"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                        </svg>
-                        Get Seller Coupons
-                      </button>
+                      <div>
+                        <button 
+                          className="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg shadow-sm flex items-center gap-2 text-sm hover:bg-gray-200"
+                          aria-label="View available seller coupons"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                          </svg>
+                          Get Seller Coupons
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Right Column */}
-                  <div className="w-full xl:w-64 flex flex-col gap-1 sm:gap-2">
-                    <div className="p-1 sm:p-2 md:p-3 bg-gray-50 rounded-lg flex flex-col gap-1" style={{ height: 'auto' }}>
-                      <div className="text-xs text-gray-600">Sold By</div>
-                      <div className="font-bold text-orange-600 text-xs md:text-sm">{product.seller}</div>
-                      <div className="flex flex-col text-xs text-gray-700 gap-0.5">
+                  {/* Right Column - Seller Info */}
+                  <div className="w-full xl:w-72 flex flex-col">
+                    <div className="p-4 bg-gray-50 rounded-lg flex flex-col gap-3 h-full">
+                      <div className="text-sm text-gray-600">Sold By</div>
+                      <div className="font-bold text-orange-600 text-base">{product.seller}</div>
+                      <div className="flex flex-col text-sm text-gray-700 gap-1">
                         <span>{product.positiveSentiment}% Positive Sentiment</span>
                         <span>{product.followers} Followers</span>
                       </div>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-2 mt-auto">
                         <button 
-                          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1 py-1 sm:px-2 sm:py-1.5 md:px-3 md:py-2 rounded-lg font-semibold shadow text-xs"
+                          className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2.5 rounded-lg font-semibold shadow text-sm"
                           onClick={() => setShowContactModal(true)}
                           aria-label="Contact the seller"
                         >
                           Contact Seller
                         </button>
-                        <div className="flex flex-col sm:flex-row gap-1">
+                        <div className="grid grid-cols-2 gap-2">
                           <button 
-                            className={`flex-1 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs transition-colors ${
+                            className={`px-3 py-2 rounded shadow text-sm transition-colors ${
                               isFollowing 
                                 ? 'bg-red-500 text-white border border-red-500 hover:bg-red-600' 
                                 : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
@@ -696,7 +700,7 @@ export default function ProductDetail() {
                             )}
                           </button>
                           <button 
-                            className="flex-1 bg-white border border-gray-300 text-gray-700 px-1 py-1 sm:px-2 sm:py-1 rounded shadow text-xs" 
+                            className="bg-white border border-gray-300 text-gray-700 px-3 py-2 rounded shadow text-sm hover:bg-gray-50" 
                             onClick={handleVisitStore}
                             aria-label="Visit seller's store"
                           >
@@ -708,9 +712,9 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-2 text-xs sm:text-sm border-t pt-2 justify-between">
-                  <span className="text-orange-600 font-semibold text-xs sm:text-sm">Seller Return Policy</span>
-                  <span className="text-blue-600 font-semibold text-xs sm:text-sm">Buyer Protection</span>
+                <div className="flex flex-col sm:flex-row gap-4 mt-4 text-sm sm:text-base border-t pt-4 justify-between">
+                  <span className="text-orange-600 font-semibold">Seller Return Policy</span>
+                  <span className="text-blue-600 font-semibold">Buyer Protection</span>
                 </div>
               </div>
             </div>
