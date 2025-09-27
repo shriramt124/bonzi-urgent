@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import CopyrightStrip from './CopyrightStrip';
  
 export default function Layout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,6 +39,9 @@ export default function Layout({ children }) {
       
       {/* Footer - Completely independent, full viewport width */}
       <Footer />
+      
+      {/* Copyright Strip - Completely decoupled, true full viewport width */}
+      <CopyrightStrip />
     </>
   );
 }

@@ -724,7 +724,7 @@ export default function ProductDetail() {
               setFeedbackSubTab={setFeedbackSubTab}
             />
 
-            <RelatedProducts relatedProducts={product.relatedProducts} />
+            {/* <RelatedProducts relatedProducts={product.relatedProducts} /> */}
 
           </div>
           <ContactSellerModal open={showContactModal} onClose={() => setShowContactModal(false)} />

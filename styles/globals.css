@@ -33,11 +33,16 @@ html {
   overflow-x: hidden;
 }
 
-/* Ensure footer copyright section always takes full viewport width */
-footer div[class*="w-screen"] {
+/* Ensure copyright strip always takes full viewport width */
+.fixed-full-width {
   width: 100vw !important;
   margin-left: calc(-50vw + 50%) !important;
   margin-right: calc(-50vw + 50%) !important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 @keyframes scroll {
