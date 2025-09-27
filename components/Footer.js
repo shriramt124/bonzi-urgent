@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaYoutube, FaPintere
 
 export default function Footer() {
   return (
-    <footer className="w-full">
+    <footer className="w-full overflow-x-hidden">
       {/* Main Footer Content */}
       <div className="w-full py-6 sm:py-12 bg-white border-t border-gray-200 mt-8 sm:mt-16">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -90,12 +90,12 @@ export default function Footer() {
 
       {/* Copyright Section */}
       <div 
-        className="bg-gray-900 text-white py-3 sm:py-6" 
+        className="bg-gray-900 text-white py-3 sm:py-6 relative" 
         style={{
           width: '100vw',
           marginLeft: 'calc(-50vw + 50%)',
-          marginRight: 'calc(-50vw + 50%)',
-          position: 'relative'
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
         <div className="w-full px-4">
