@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -18,16 +19,16 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col overflow-x-hidden">
-      {/* Header and Main Content Container */}
-      <div className="flex-1">
+    <>
+      {/* Header and Main Content - Contained Layout */}
+      <div className="min-h-screen bg-gray-100 flex flex-col">
         <Header 
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           scrolled={scrolled}
         />
         
-        <div className="flex max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="flex-1 flex max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 w-full">
           <Sidebar isOpen={sidebarOpen} />
           <main className={`flex-1 ${sidebarOpen ? 'ml-64' : 'ml-0'} transition-all duration-300`}>
             {children}
@@ -35,8 +36,9 @@ export default function Layout({ children }) {
         </div>
       </div>
       
-      {/* Footer - Outside all containers for true full width */}
+      {/* Footer - Completely independent, full viewport width */}
       <Footer />
-    </div>
+    </>
   );
 }
+

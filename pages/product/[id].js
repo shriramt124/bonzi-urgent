@@ -10,7 +10,6 @@ import ContactSellerModal from '../../components/ContactSellerModal';
 import ProductTabs from '../../components/product/ProductTabs';
 import { useCart } from '../../contexts/CartContext';
 
-// Regular import to avoid webpack issues
 import RelatedProducts from '../../components/product/RelatedProducts';
 
 export default function ProductDetail() {

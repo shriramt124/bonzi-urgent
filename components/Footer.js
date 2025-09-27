@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaYoutube, FaPinterest, FaCcVisa, FaCcAmex, FaCcMastercard, FaGooglePlay, FaAppStoreIos } from 'react-icons/fa';
 
@@ -86,8 +87,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Copyright Section - True full width */}
-      <div className="bg-gray-900 text-white py-3 sm:py-6 w-full">
+      {/* Copyright Section - Full Viewport Width Breakout */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gray-900 text-white py-3 sm:py-6">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-2 sm:mb-0">
