@@ -89,7 +89,15 @@ export default function Footer() {
       
 
       {/* Copyright Section */}
-      <div className="w-full bg-gray-900 text-white py-3 sm:py-6 relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] max-w-none">
+      <div 
+        className="bg-gray-900 text-white py-3 sm:py-6" 
+        style={{
+          width: '100vw',
+          marginLeft: 'calc(-50vw + 50%)',
+          marginRight: 'calc(-50vw + 50%)',
+          position: 'relative'
+        }}
+      >
         <div className="w-full px-4">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
               <div className="flex items-center space-x-2 sm:space-x-4">
